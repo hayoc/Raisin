@@ -10,6 +10,7 @@ public class Node {
     private String proposition;
     private Node parent;
     private List<Node> children;
+    private boolean closed;
 
     public Node() {}
 
@@ -36,11 +37,27 @@ public class Node {
         this.proposition = proposition;
     }
 
+    public Node getParent() {
+        return parent;
+    }
+
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
     public List<Node> getChildren() {
         return children;
     }
 
     public void setChildren(List<Node> children) {
         this.children = children;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
     }
 }

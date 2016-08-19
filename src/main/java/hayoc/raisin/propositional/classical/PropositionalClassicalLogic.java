@@ -7,14 +7,12 @@ import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtil
 import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import hayoc.raisin.propositional.common.PropositionalUtilities;
 import hayoc.raisin.search.Node;
+import hayoc.raisin.search.TableauxSearch;
 import hayoc.raisin.setup.RaisinModule;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by Hayo on 16/08/2016.
@@ -24,10 +22,12 @@ public class PropositionalClassicalLogic {
     private static final Logger LOG = Logger.getLogger(PropositionalClassicalLogic.class);
 
     private PropositionalUtilities propositionalUtilities;
+    private TableauxSearch tableauxSearch;
 
     @Inject
-    public PropositionalClassicalLogic(PropositionalUtilities propositionalUtilities) {
+    public PropositionalClassicalLogic(PropositionalUtilities propositionalUtilities, TableauxSearch tableauxSearch) {
         this.propositionalUtilities = propositionalUtilities;
+        this.tableauxSearch = tableauxSearch;
     }
 
     public boolean prove(String goal) {
@@ -37,35 +37,12 @@ public class PropositionalClassicalLogic {
             return false;
         }
 
-        Queue<PropositionalClassicalRule> applicableRules = new LinkedList<PropositionalClassicalRule>();
-
-        applicableRules.addAll(getApplicableRules(goal));
-
-        return false;
-    }
-
-    private List<PropositionalClassicalRule> getApplicableRules(String proposition) {
-        List<PropositionalClassicalRule> rules = new ArrayList<PropositionalClassicalRule>();
-
-        Node node = new Node(proposition);
-
-        for (Class clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
-            try {
-                PropositionalClassicalRule rule = (PropositionalClassicalRule) clazz.newInstance();
-                if (rule.applicable(node))
-                    rules.add(rule);
-            } catch (InstantiationException | IllegalAccessException e) {
-                LOG.error("Could not instantiate " + clazz.getSimpleName() + " with error: " + e);
-            }
-        }
-
-        return rules;
+        return tableauxSearch.start(goal);
     }
 
     public static void main(String[] args) {
         RaisinModule module = new RaisinModule();
         Injector injector = Guice.createInjector(module);
-
         injector.getInstance(PropositionalClassicalLogic.class).prove("(((A > B) & (A > C)) > (A > (B & C)))");
     }
 }

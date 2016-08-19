@@ -11,5 +11,5 @@ public interface PropositionalClassicalRule {
 
     boolean applicable(Node proposition);
 
-    List<Node> apply(Node proposition);
+    List<Node> apply();
 }

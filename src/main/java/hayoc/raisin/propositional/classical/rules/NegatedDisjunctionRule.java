@@ -14,7 +14,7 @@ public class NegatedDisjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public List<Node> apply(Node proposition) {
+    public List<Node> apply() {
         return null;
     }
 }
