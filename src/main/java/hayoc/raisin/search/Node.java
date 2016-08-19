@@ -1,5 +1,6 @@
 package hayoc.raisin.search;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +52,12 @@ public class Node {
 
     public void setChildren(List<Node> children) {
         this.children = children;
+    }
+
+    public void addChild(Node child) {
+        if (children == null)
+            children = new ArrayList<>();
+        children.add(child);
     }
 
     public boolean isClosed() {

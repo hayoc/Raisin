@@ -14,8 +14,8 @@ public class PropositionalUtilities {
     private static final Logger LOG = Logger.getLogger(PropositionalUtilities.class);
 
     public static final char NEGATION = '~';
-    public static final char INNER_PARENTHESIS = '(';
-    public static final char OUTER_PARENTHESIS = ')';
+    public static final char OPEN_PARENTHESIS = '(';
+    public static final char CLOSE_PARENTHESIS = ')';
     public static final char CONJUNCTION = '&';
     public static final char DISJUNCTION = '|';
     public static final char CONDITIONAL = '>';
@@ -35,11 +35,11 @@ public class PropositionalUtilities {
         for (int i = 0; i < goal.length(); i++) {
             char c = goal.charAt(i);
 
-            if (c == INNER_PARENTHESIS) {
+            if (c == OPEN_PARENTHESIS) {
                 inBrackets++;
                 parentheses++;
             }
-            if (c == OUTER_PARENTHESIS) {
+            if (c == CLOSE_PARENTHESIS) {
                 inBrackets--;
                 parentheses++;
             }
@@ -51,6 +51,6 @@ public class PropositionalUtilities {
             LOG.error("Goal Syntax: Invalid amount of parentheses");
             throw new PropositionalSyntaxException();
         }
-        return modify ? INNER_PARENTHESIS + goal + OUTER_PARENTHESIS : goal;
+        return modify ? OPEN_PARENTHESIS + goal + CLOSE_PARENTHESIS : goal;
     }
 }

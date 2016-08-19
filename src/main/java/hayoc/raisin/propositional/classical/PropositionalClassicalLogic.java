@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.classical;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import hayoc.raisin.propositional.classical.rules.NegatedImplicationRule;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRule;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
 import hayoc.raisin.propositional.common.PropositionalSyntaxException;
