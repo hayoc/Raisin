@@ -5,6 +5,7 @@ import hayoc.raisin.search.Node;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -87,6 +88,33 @@ public class PropositionalClassicalRuleUtilities {
         return nodes;
     }
 
+
+    protected List<Node> createSeparateAndSameBranchChildren(Node parent, String firstAntecedent, String firstConsequent, String secondAntecedent, String secondConsequent) {
+        List<Node> nodes = new ArrayList<>();
+
+        List<Node> childNodes = new ArrayList<>();
+        getLowestChildNodes(parent, childNodes);
+        for (Node node : childNodes) {
+            if (branchClosed(node))
+                continue;
+            nodes.clear();
+
+            Node firstConsequentNode = new Node(firstConsequent, null, null);
+            Node firstAntecedentNode = new Node(firstAntecedent, null, Collections.singletonList(firstConsequentNode));
+            firstConsequentNode.setParent(firstAntecedentNode);
+
+            Node secondConsequentNode = new Node(secondConsequent, null, null);
+            Node secondAntecedentNode = new Node(secondAntecedent, null, Collections.singletonList(secondConsequentNode));
+            secondConsequentNode.setParent(secondAntecedentNode);
+
+            nodes.add(firstAntecedentNode);
+            nodes.add(secondAntecedentNode);
+            node.setChildren(nodes);
+        }
+
+        return nodes;
+    }
+
     protected boolean isNegation(Node propositionNode, Node parentNode) {
         String proposition = propositionNode.getProposition();
         String parent = parentNode.getProposition();
@@ -97,7 +125,7 @@ public class PropositionalClassicalRuleUtilities {
         }
     }
 
-    private void getLowestChildNodes(Node node, List<Node> childNodes) {
+    protected void getLowestChildNodes(Node node, List<Node> childNodes) {
         if (CollectionUtils.isEmpty(node.getChildren())) {
             childNodes.add(node);
         } else {

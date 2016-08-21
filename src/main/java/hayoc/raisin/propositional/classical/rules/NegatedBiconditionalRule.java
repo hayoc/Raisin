@@ -1,5 +1,6 @@
 package hayoc.raisin.propositional.classical.rules;
 
+import hayoc.raisin.propositional.common.PropositionalUtilities;
 import hayoc.raisin.search.Node;
 
 import java.util.List;
@@ -20,11 +21,23 @@ public class NegatedBiconditionalRule implements PropositionalClassicalRule {
 
     @Override
     public boolean applicable(Node proposition) {
-        return false;
+        this.node = proposition;
+
+        if (proposition.getProposition().charAt(0) != PropositionalUtilities.NEGATION)
+            return false;
+
+        splitPosition = ruleUtilities.getConnectivePosition(proposition, PropositionalUtilities.BICONDITIONAL);
+
+        return splitPosition != 0;
     }
 
     @Override
     public List<Node> apply() {
-        return null;
+        String firstAntecedent = node.getProposition().substring(2, splitPosition).trim();
+        String firstConsequent = PropositionalUtilities.NEGATION + node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
+        String secondAntecedent = PropositionalUtilities.NEGATION + node.getProposition().substring(2, splitPosition).trim();
+        String secondConsequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
+
+        return ruleUtilities.createSeparateAndSameBranchChildren(node, firstAntecedent, firstConsequent, secondAntecedent, secondConsequent);
     }
 }
