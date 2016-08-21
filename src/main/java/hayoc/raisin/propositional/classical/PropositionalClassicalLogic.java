@@ -44,6 +44,7 @@ public class PropositionalClassicalLogic {
     public static void main(String[] args) {
         RaisinModule module = new RaisinModule();
         Injector injector = Guice.createInjector(module);
-        injector.getInstance(PropositionalClassicalLogic.class).prove("(((A > B) & (A > C)) > (A > (B & C)))");
+        if (injector.getInstance(PropositionalClassicalLogic.class).prove("(((A > B) & (A > C)) > (A > (B & C)))"))
+            System.out.println("GOTTEM");
     }
 }

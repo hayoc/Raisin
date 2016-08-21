@@ -7,6 +7,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -15,6 +17,13 @@ import java.util.*;
 public class TableauxSearch {
 
     private static final Logger LOG = Logger.getLogger(TableauxSearch.class);
+
+    private PropositionalClassicalRuleUtilities ruleUtilities;
+
+    @Inject
+    public TableauxSearch(PropositionalClassicalRuleUtilities ruleUtilities) {
+        this.ruleUtilities = ruleUtilities;
+    }
 
     public boolean start(String goal) {
         Node goalNode = new Node(goal);
@@ -26,13 +35,47 @@ public class TableauxSearch {
 
         while (!propositions.isEmpty()) {
             Node proposition = propositions.poll();
-            if (!branchClosed(proposition)) {
+            if (!ruleUtilities.branchClosed(proposition)) {
                 rules.addAll(getApplicableRules(proposition));
                 propositions.addAll(applyRules(rules));
+                rules.clear();
             }
         }
 
         return allBranchesClosed(goalNode);
+    }
+
+    protected List<PropositionalClassicalRule> getApplicableRules(Node proposition) {
+        List<PropositionalClassicalRule> rules = new ArrayList<>();
+
+        for (Class<?> clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
+            try {
+                Constructor<?> constructor =
+                        clazz.getConstructor(PropositionalClassicalRuleUtilities.class);
+                PropositionalClassicalRule rule =
+                         (PropositionalClassicalRule) constructor.newInstance(new PropositionalClassicalRuleUtilities());
+                if (rule.applicable(proposition))
+                    rules.add(rule);
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                LOG.error("Could not instantiate " + clazz.getSimpleName() + " with error: " + e);
+            }
+        }
+
+        return rules;
+    }
+
+    protected Collection<Node> applyRules(List<PropositionalClassicalRule> rules) {
+        Collection<Node> results = new ArrayList<>();
+        for (PropositionalClassicalRule rule : rules)
+            results.addAll(rule.apply());
+
+        Collection<Node> propositions = new ArrayList<>();
+        for (Node result : results) {
+            propositions.add(result);
+            if (CollectionUtils.isNotEmpty(result.getChildren()))
+                propositions.addAll(result.getChildren());
+        }
+        return propositions;
     }
 
     protected boolean allBranchesClosed(Node node) {
@@ -53,51 +96,5 @@ public class TableauxSearch {
                 getLeafNodes(child, leafNodes);
             }
         }
-    }
-
-    protected boolean branchClosed(Node proposition) {
-        Node parent = proposition.getParent();
-        while (parent != null) {
-            if (isNegation(proposition, parent)) {
-                proposition.setClosed(true);
-                return true;
-            }
-            parent = parent.getParent();
-        }
-        proposition.setClosed(false);
-        return false;
-    }
-
-    protected boolean isNegation(Node propositionNode, Node parentNode) {
-        String proposition = propositionNode.getProposition();
-        String parent = parentNode.getProposition();
-        if (proposition.charAt(0) == PropositionalUtilities.NEGATION) {
-            return proposition.substring(1).equals(parent);
-        } else {
-            return proposition.equals(parent.substring(1));
-        }
-    }
-
-    protected List<PropositionalClassicalRule> getApplicableRules(Node proposition) {
-        List<PropositionalClassicalRule> rules = new ArrayList<>();
-
-        for (Class clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
-            try {
-                PropositionalClassicalRule rule = (PropositionalClassicalRule) clazz.newInstance();
-                if (rule.applicable(proposition))
-                    rules.add(rule);
-            } catch (InstantiationException | IllegalAccessException e) {
-                LOG.error("Could not instantiate " + clazz.getSimpleName() + " with error: " + e);
-            }
-        }
-
-        return rules;
-    }
-
-    protected Collection<Node> applyRules(List<PropositionalClassicalRule> rules) {
-        Collection<Node> result = new ArrayList<>();
-        for (PropositionalClassicalRule rule : rules)
-            result.addAll(rule.apply());
-        return result;
     }
 }

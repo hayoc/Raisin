@@ -12,6 +12,7 @@ public class Node {
     private Node parent;
     private List<Node> children;
     private boolean closed;
+    private boolean branchChecked;
 
     public Node() {}
 
@@ -66,5 +67,14 @@ public class Node {
 
     public void setClosed(boolean closed) {
         this.closed = closed;
+        this.branchChecked = true;
+    }
+
+    public boolean isBranchChecked() {
+        return branchChecked;
+    }
+
+    public void setBranchChecked(boolean branchChecked) {
+        this.branchChecked = branchChecked;
     }
 }

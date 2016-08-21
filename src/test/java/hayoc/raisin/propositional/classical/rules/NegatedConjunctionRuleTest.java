@@ -13,21 +13,26 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by Hayo on 19/08/2016.
+ * Created by hayoc on 8/20/2016.
  */
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules({TestModule.class})
-public class ImplicationRuleTest {
+public class NegatedConjunctionRuleTest {
 
     @Test
-    public void testImplicationRule() {
-        PropositionalClassicalRule rule = new ImplicationRule(new PropositionalClassicalRuleUtilities());
-        assertTrue(rule.applicable(new Node("(((A > B) & (A > C)) > (A > (B & C)))")));
+    public void testNegatedConjunctionRule() {
+        PropositionalClassicalRule rule = new NegatedConjunctionRule(new PropositionalClassicalRuleUtilities());
+        assertTrue(rule.applicable(new Node("~(((A > B) & (A > C)) & (A > (B & C)))")));
         List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "~((A > B) & (A > C))");
-        assertEquals(resultNodes.get(1).getProposition(), "(A > (B & C))");
+        assertEquals(resultNodes.get(1).getProposition(), "~(A > (B & C))");
 
-        assertFalse(rule.applicable(new Node("(((A > B) & (A > C)) & (A > (B & C)))")));
+        assertTrue(rule.applicable(new Node("~(A & B)")));
+        resultNodes = rule.apply();
+        assertEquals(resultNodes.get(0).getProposition(), "~A");
+        assertEquals(resultNodes.get(1).getProposition(), "~B");
+
         assertFalse(rule.applicable(new Node("~(((A > B) & (A > C)) > (A > (B & C)))")));
+        assertFalse(rule.applicable(new Node("(((A > B) & (A > C)) & (A > (B & C)))")));
     }
 }

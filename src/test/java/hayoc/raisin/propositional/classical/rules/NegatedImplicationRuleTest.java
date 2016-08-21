@@ -21,7 +21,7 @@ public class NegatedImplicationRuleTest {
 
     @Test
     public void negatedImplicationRule() {
-        PropositionalClassicalRule rule = new NegatedImplicationRule();
+        PropositionalClassicalRule rule = new NegatedImplicationRule(new PropositionalClassicalRuleUtilities());
         assertTrue(rule.applicable(new Node("~(((A > B) & (A > C)) > (A > (B & C)))")));
         List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "((A > B) & (A > C))");

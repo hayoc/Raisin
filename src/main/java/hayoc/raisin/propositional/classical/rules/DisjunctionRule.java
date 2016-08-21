@@ -8,6 +8,16 @@ import java.util.List;
  * Created by Hayo on 17/08/2016.
  */
 public class DisjunctionRule implements PropositionalClassicalRule {
+
+    private PropositionalClassicalRuleUtilities ruleUtilities;
+
+    private Node node;
+    private int splitPosition;
+
+    public DisjunctionRule(PropositionalClassicalRuleUtilities ruleUtilities) {
+        this.ruleUtilities = ruleUtilities;
+    }
+
     @Override
     public boolean applicable(Node proposition) {
         return false;

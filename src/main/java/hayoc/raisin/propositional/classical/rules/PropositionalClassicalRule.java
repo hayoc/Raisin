@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.search.Node;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**

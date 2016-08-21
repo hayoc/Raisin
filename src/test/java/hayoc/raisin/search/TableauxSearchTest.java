@@ -25,37 +25,6 @@ public class TableauxSearchTest {
     private TableauxSearch tableauxSearch;
 
     @Test
-    public void testIsNegation() {
-        Node childNode = new Node("~(A > C)");
-        Node parentNode = new Node("(A > C)");
-        assertTrue(tableauxSearch.isNegation(childNode, parentNode));
-
-        parentNode.setProposition("~(A > C)");
-        assertFalse(tableauxSearch.isNegation(childNode, parentNode));
-
-        childNode.setProposition("(A > C)");
-        assertTrue(tableauxSearch.isNegation(childNode, parentNode));
-    }
-
-    @Test
-    public void testBranchClosed() {
-        Node leaf = new Node("A");
-        Node subNode = new Node("~(A & C)");
-        Node root = new Node("~A");
-
-        leaf.setParent(subNode);
-        subNode.setParent(root);
-        assertTrue(tableauxSearch.branchClosed(leaf));
-
-        leaf.setProposition("~A");
-        assertFalse(tableauxSearch.branchClosed(leaf));
-
-        Node leaf2 = new Node("A");
-        leaf2.setParent(subNode);
-        assertTrue(tableauxSearch.branchClosed(leaf2));
-    }
-
-    @Test
     public void testAllBranchesClosed() {
         Node root = new Node();
         Node child = new Node();
