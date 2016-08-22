@@ -1,10 +1,8 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.common.PropositionalUtilities;
-import hayoc.raisin.search.Node;
+import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +12,7 @@ public class ConjunctionRule implements PropositionalClassicalRule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
-    private Node node;
+    private PropositionalClassicalNode node;
     private int splitPosition;
 
     public ConjunctionRule(PropositionalClassicalRuleUtilities ruleUtilities) {
@@ -22,7 +20,7 @@ public class ConjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public boolean applicable(Node proposition) {
+    public boolean applicable(PropositionalClassicalNode proposition) {
         this.node = proposition;
 
         if (proposition.getProposition().charAt(0) == PropositionalUtilities.NEGATION)
@@ -34,7 +32,7 @@ public class ConjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public List<Node> apply() {
+    public List<PropositionalClassicalNode> apply() {
         String antecedent = node.getProposition().substring(1, splitPosition).trim();
         String consequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 

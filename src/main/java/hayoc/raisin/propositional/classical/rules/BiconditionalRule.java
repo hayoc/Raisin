@@ -1,12 +1,9 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.common.PropositionalUtilities;
-import hayoc.raisin.search.Node;
+import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import org.apache.commons.collections4.ListUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,7 +13,7 @@ public class BiconditionalRule implements PropositionalClassicalRule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
-    private Node node;
+    private PropositionalClassicalNode node;
     private int splitPosition;
 
     public BiconditionalRule(PropositionalClassicalRuleUtilities ruleUtilities) {
@@ -24,7 +21,7 @@ public class BiconditionalRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public boolean applicable(Node proposition) {
+    public boolean applicable(PropositionalClassicalNode proposition) {
         this.node = proposition;
 
         if (proposition.getProposition().charAt(0) == PropositionalUtilities.NEGATION)
@@ -36,14 +33,14 @@ public class BiconditionalRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public List<Node> apply() {
+    public List<PropositionalClassicalNode> apply() {
         String firstAntecedent = node.getProposition().substring(1, splitPosition).trim();
         String firstConsequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
         String secondAntecedent = PropositionalUtilities.NEGATION + node.getProposition().substring(1, splitPosition).trim();
         String secondConsequent = PropositionalUtilities.NEGATION + node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 
-        List<Node> firstSet = ruleUtilities.createSameBranchChildren(node, firstAntecedent, firstConsequent);
-        List<Node> secondSet = ruleUtilities.createSameBranchChildren(node, secondAntecedent, secondConsequent);
+        List<PropositionalClassicalNode> firstSet = ruleUtilities.createSameBranchChildren(node, firstAntecedent, firstConsequent);
+        List<PropositionalClassicalNode> secondSet = ruleUtilities.createSameBranchChildren(node, secondAntecedent, secondConsequent);
 
         return ListUtils.union(firstSet, secondSet);
     }

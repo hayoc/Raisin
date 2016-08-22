@@ -1,9 +1,8 @@
 package hayoc.raisin.propositional.classical.rules;
 
-import hayoc.raisin.search.Node;
+import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,16 +22,16 @@ public class BiconditionalRuleTest {
     @Test
     public void testBiconditionalRule() {
         PropositionalClassicalRule rule = new BiconditionalRule(new PropositionalClassicalRuleUtilities());
-        assertTrue(rule.applicable(new Node("((A & B) = (B & A))")));
+        assertTrue(rule.applicable(new PropositionalClassicalNode("((A & B) = (B & A))")));
 
-        List<Node> resultNodes = rule.apply();
+        List<PropositionalClassicalNode> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "(A & B)");
         assertEquals(resultNodes.get(0).getChildren().get(0).getProposition(), "(B & A)");
         assertEquals(resultNodes.get(1).getProposition(), "~(A & B)");
         assertEquals(resultNodes.get(1).getChildren().get(0).getProposition(), "~(B & A)");
 
-        assertFalse(rule.applicable(new Node("~((A & B) = (B & A))")));
-        assertFalse(rule.applicable(new Node("((A & B) > (B & A))")));
+        assertFalse(rule.applicable(new PropositionalClassicalNode("~((A & B) = (B & A))")));
+        assertFalse(rule.applicable(new PropositionalClassicalNode("((A & B) > (B & A))")));
 
     }
 }

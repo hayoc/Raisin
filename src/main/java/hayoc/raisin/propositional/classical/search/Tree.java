@@ -1,4 +1,4 @@
-package hayoc.raisin.search;
+package hayoc.raisin.propositional.classical.search;
 
 /**
  * Created by Hayo on 17/08/2016.

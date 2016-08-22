@@ -1,7 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.common.PropositionalUtilities;
-import hayoc.raisin.search.Node;
+import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class NegatedDisjunctionRule implements PropositionalClassicalRule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
-    private Node node;
+    private PropositionalClassicalNode node;
     private int splitPosition;
 
     public NegatedDisjunctionRule(PropositionalClassicalRuleUtilities ruleUtilities) {
@@ -20,10 +20,10 @@ public class NegatedDisjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public boolean applicable(Node proposition) {
+    public boolean applicable(PropositionalClassicalNode proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) != PropositionalUtilities.NEGATION)
+        if (proposition.getProposition().charAt(0) != PropositionalUtilities.NEGATION || proposition.getProposition().charAt(1) == PropositionalUtilities.NEGATION)
             return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, PropositionalUtilities.DISJUNCTION);
@@ -32,7 +32,7 @@ public class NegatedDisjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public List<Node> apply() {
+    public List<PropositionalClassicalNode> apply() {
         String antecedent = PropositionalUtilities.NEGATION + node.getProposition().substring(2, splitPosition).trim();
         String consequent = PropositionalUtilities.NEGATION + node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 

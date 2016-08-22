@@ -1,8 +1,7 @@
-package hayoc.raisin.search;
+package hayoc.raisin.propositional.classical.search;
 
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRule;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.common.PropositionalUtilities;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
@@ -14,27 +13,27 @@ import java.util.*;
 /**
  * Created by Hayo on 19/08/2016.
  */
-public class TableauxSearch {
+public class PropositionalClassicalTableauxSearch {
 
-    private static final Logger LOG = Logger.getLogger(TableauxSearch.class);
+    private static final Logger LOG = Logger.getLogger(PropositionalClassicalTableauxSearch.class);
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
     @Inject
-    public TableauxSearch(PropositionalClassicalRuleUtilities ruleUtilities) {
+    public PropositionalClassicalTableauxSearch(PropositionalClassicalRuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;
     }
 
     public boolean start(String goal) {
-        Node goalNode = new Node(goal);
+        PropositionalClassicalNode goalNode = new PropositionalClassicalNode(goal);
 
-        Queue<Node> propositions = new LinkedList<>();
+        Queue<PropositionalClassicalNode> propositions = new LinkedList<>();
         propositions.add(goalNode);
 
         List<PropositionalClassicalRule> rules = new ArrayList<>();
 
         while (!propositions.isEmpty()) {
-            Node proposition = propositions.poll();
+            PropositionalClassicalNode proposition = propositions.poll();
             if (!ruleUtilities.branchClosed(proposition)) {
                 rules.addAll(getApplicableRules(proposition));
                 propositions.addAll(applyRules(rules));
@@ -45,7 +44,7 @@ public class TableauxSearch {
         return allBranchesClosed(goalNode);
     }
 
-    protected List<PropositionalClassicalRule> getApplicableRules(Node proposition) {
+    protected List<PropositionalClassicalRule> getApplicableRules(PropositionalClassicalNode proposition) {
         List<PropositionalClassicalRule> rules = new ArrayList<>();
 
         for (Class<?> clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
@@ -64,13 +63,13 @@ public class TableauxSearch {
         return rules;
     }
 
-    protected Collection<Node> applyRules(List<PropositionalClassicalRule> rules) {
-        Collection<Node> results = new ArrayList<>();
+    protected Collection<PropositionalClassicalNode> applyRules(List<PropositionalClassicalRule> rules) {
+        Collection<PropositionalClassicalNode> results = new ArrayList<>();
         for (PropositionalClassicalRule rule : rules)
             results.addAll(rule.apply());
 
-        Collection<Node> propositions = new ArrayList<>();
-        for (Node result : results) {
+        Collection<PropositionalClassicalNode> propositions = new ArrayList<>();
+        for (PropositionalClassicalNode result : results) {
             propositions.add(result);
             if (CollectionUtils.isNotEmpty(result.getChildren()))
                 propositions.addAll(result.getChildren());
@@ -78,21 +77,21 @@ public class TableauxSearch {
         return propositions;
     }
 
-    protected boolean allBranchesClosed(Node node) {
-        List<Node> leafNodes = new ArrayList<>();
+    protected boolean allBranchesClosed(PropositionalClassicalNode node) {
+        List<PropositionalClassicalNode> leafNodes = new ArrayList<>();
         getLeafNodes(node, leafNodes);
-        for (Node leaf : leafNodes) {
+        for (PropositionalClassicalNode leaf : leafNodes) {
             if (!leaf.isClosed())
                 return false;
         }
         return true;
     }
 
-    private void getLeafNodes(Node node, List<Node> leafNodes) {
+    private void getLeafNodes(PropositionalClassicalNode node, List<PropositionalClassicalNode> leafNodes) {
         if (CollectionUtils.isEmpty(node.getChildren())) {
             leafNodes.add(node);
         } else {
-            for (Node child : node.getChildren()) {
+            for (PropositionalClassicalNode child : node.getChildren()) {
                 getLeafNodes(child, leafNodes);
             }
         }

@@ -1,4 +1,4 @@
-package hayoc.raisin.search;
+package hayoc.raisin.propositional.classical.search;
 
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
@@ -22,25 +22,25 @@ import static org.junit.Assert.assertTrue;
 public class TableauxSearchTest {
 
     @Inject
-    private TableauxSearch tableauxSearch;
+    private PropositionalClassicalTableauxSearch tableauxSearch;
 
     @Test
     public void testAllBranchesClosed() {
-        Node root = new Node();
-        Node child = new Node();
-        Node child2 = new Node();
+        PropositionalClassicalNode root = new PropositionalClassicalNode();
+        PropositionalClassicalNode child = new PropositionalClassicalNode();
+        PropositionalClassicalNode child2 = new PropositionalClassicalNode();
         child2.setClosed(true);
 
-        List<Node> bottomChildNodes = new ArrayList<>();
-        Node bottomChild = new Node();
+        List<PropositionalClassicalNode> bottomChildNodes = new ArrayList<>();
+        PropositionalClassicalNode bottomChild = new PropositionalClassicalNode();
         bottomChild.setClosed(true);
-        Node bottomChild2 = new Node();
+        PropositionalClassicalNode bottomChild2 = new PropositionalClassicalNode();
         bottomChild2.setClosed(true);
         bottomChildNodes.add(bottomChild);
         bottomChildNodes.add(bottomChild2);
         child.setChildren(bottomChildNodes);
 
-        List<Node> childNodes = new ArrayList<>();
+        List<PropositionalClassicalNode> childNodes = new ArrayList<>();
         childNodes.add(child);
         childNodes.add(child2);
         root.setChildren(childNodes);

@@ -1,8 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
-import hayoc.raisin.search.Node;
+import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -10,7 +9,7 @@ import java.util.List;
  */
 public interface PropositionalClassicalRule {
 
-    boolean applicable(Node proposition);
+    boolean applicable(PropositionalClassicalNode proposition);
 
-    List<Node> apply();
+    List<PropositionalClassicalNode> apply();
 }

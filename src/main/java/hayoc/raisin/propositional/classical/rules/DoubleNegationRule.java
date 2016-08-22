@@ -1,7 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.common.PropositionalUtilities;
-import hayoc.raisin.search.Node;
+import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 
 import java.util.Collections;
 import java.util.List;
@@ -13,22 +13,22 @@ public class DoubleNegationRule implements PropositionalClassicalRule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
-    private Node node;
+    private PropositionalClassicalNode node;
 
     public DoubleNegationRule(PropositionalClassicalRuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;
     }
 
     @Override
-    public boolean applicable(Node proposition) {
+    public boolean applicable(PropositionalClassicalNode proposition) {
         this.node = proposition;
 
         return proposition.getProposition().charAt(0) == PropositionalUtilities.NEGATION && proposition.getProposition().charAt(1) == PropositionalUtilities.NEGATION;
     }
 
     @Override
-    public List<Node> apply() {
-        Node result = new Node(node.getProposition().substring(2).trim(), node, null);
+    public List<PropositionalClassicalNode> apply() {
+        PropositionalClassicalNode result = new PropositionalClassicalNode(node.getProposition().substring(2).trim(), node, null);
         return Collections.singletonList(result);
     }
 }

@@ -1,4 +1,4 @@
-package hayoc.raisin.search;
+package hayoc.raisin.propositional.classical.search;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,26 +6,26 @@ import java.util.List;
 /**
  * Created by Hayo on 17/08/2016.
  */
-public class Node {
+public class PropositionalClassicalNode {
 
     private String proposition;
-    private Node parent;
-    private List<Node> children;
+    private PropositionalClassicalNode parent;
+    private List<PropositionalClassicalNode> children;
     private boolean closed;
     private boolean branchChecked;
 
-    public Node() {}
+    public PropositionalClassicalNode() {}
 
-    public Node(String proposition) {
+    public PropositionalClassicalNode(String proposition) {
         this.proposition = proposition;
     }
 
-    public Node(String proposition, List<Node> children) {
+    public PropositionalClassicalNode(String proposition, List<PropositionalClassicalNode> children) {
         this.proposition = proposition;
         this.children = children;
     }
 
-    public Node(String proposition, Node parent, List<Node> children) {
+    public PropositionalClassicalNode(String proposition, PropositionalClassicalNode parent, List<PropositionalClassicalNode> children) {
         this.proposition = proposition;
         this.parent = parent;
         this.children = children;
@@ -39,23 +39,23 @@ public class Node {
         this.proposition = proposition;
     }
 
-    public Node getParent() {
+    public PropositionalClassicalNode getParent() {
         return parent;
     }
 
-    public void setParent(Node parent) {
+    public void setParent(PropositionalClassicalNode parent) {
         this.parent = parent;
     }
 
-    public List<Node> getChildren() {
+    public List<PropositionalClassicalNode> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Node> children) {
+    public void setChildren(List<PropositionalClassicalNode> children) {
         this.children = children;
     }
 
-    public void addChild(Node child) {
+    public void addChild(PropositionalClassicalNode child) {
         if (children == null)
             children = new ArrayList<>();
         children.add(child);
