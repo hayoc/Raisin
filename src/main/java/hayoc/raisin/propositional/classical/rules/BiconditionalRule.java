@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.common.PropositionalUtilities;
 import hayoc.raisin.search.Node;
+import org.apache.commons.collections4.ListUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +42,10 @@ public class BiconditionalRule implements PropositionalClassicalRule {
         String secondAntecedent = PropositionalUtilities.NEGATION + node.getProposition().substring(1, splitPosition).trim();
         String secondConsequent = PropositionalUtilities.NEGATION + node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 
-        return ruleUtilities.createSeparateAndSameBranchChildren(node, firstAntecedent, firstConsequent, secondAntecedent, secondConsequent);
+        List<Node> firstSet = ruleUtilities.createSameBranchChildren(node, firstAntecedent, firstConsequent);
+        List<Node> secondSet = ruleUtilities.createSameBranchChildren(node, secondAntecedent, secondConsequent);
+
+        return ListUtils.union(firstSet, secondSet);
     }
 
 }

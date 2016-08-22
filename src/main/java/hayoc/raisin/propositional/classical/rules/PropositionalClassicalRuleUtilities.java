@@ -88,33 +88,6 @@ public class PropositionalClassicalRuleUtilities {
         return nodes;
     }
 
-
-    protected List<Node> createSeparateAndSameBranchChildren(Node parent, String firstAntecedent, String firstConsequent, String secondAntecedent, String secondConsequent) {
-        List<Node> nodes = new ArrayList<>();
-
-        List<Node> childNodes = new ArrayList<>();
-        getLowestChildNodes(parent, childNodes);
-        for (Node node : childNodes) {
-            if (branchClosed(node))
-                continue;
-            nodes.clear();
-
-            Node firstConsequentNode = new Node(firstConsequent, null, null);
-            Node firstAntecedentNode = new Node(firstAntecedent, null, Collections.singletonList(firstConsequentNode));
-            firstConsequentNode.setParent(firstAntecedentNode);
-
-            Node secondConsequentNode = new Node(secondConsequent, null, null);
-            Node secondAntecedentNode = new Node(secondAntecedent, null, Collections.singletonList(secondConsequentNode));
-            secondConsequentNode.setParent(secondAntecedentNode);
-
-            nodes.add(firstAntecedentNode);
-            nodes.add(secondAntecedentNode);
-            node.setChildren(nodes);
-        }
-
-        return nodes;
-    }
-
     protected boolean isNegation(Node propositionNode, Node parentNode) {
         String proposition = propositionNode.getProposition();
         String parent = parentNode.getProposition();
