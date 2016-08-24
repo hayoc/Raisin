@@ -1,5 +1,6 @@
 package hayoc.raisin.propositional.classical.rules;
 
+import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.PropositionalUtilities;
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 
@@ -12,7 +13,7 @@ public class NegatedImplicationRule implements PropositionalClassicalRule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
-    private PropositionalClassicalNode node;
+    private Node node;
     private int splitPosition;
 
     public NegatedImplicationRule(PropositionalClassicalRuleUtilities ruleUtilities) {
@@ -20,7 +21,7 @@ public class NegatedImplicationRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public boolean applicable(PropositionalClassicalNode proposition) {
+    public boolean applicable(Node proposition) {
         this.node = proposition;
 
         if (proposition.getProposition().charAt(0) != PropositionalUtilities.NEGATION || proposition.getProposition().charAt(1) == PropositionalUtilities.NEGATION)
@@ -32,7 +33,7 @@ public class NegatedImplicationRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public List<PropositionalClassicalNode> apply() {
+    public List<Node> apply() {
         String antecedent = node.getProposition().substring(2, splitPosition).trim();
         String consequent = PropositionalUtilities.NEGATION + node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 

@@ -1,7 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.common.PropositionalUtilities;
-import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
+import hayoc.raisin.propositional.common.Node;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class DisjunctionRule implements PropositionalClassicalRule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
-    private PropositionalClassicalNode node;
+    private Node node;
     private int splitPosition;
 
     public DisjunctionRule(PropositionalClassicalRuleUtilities ruleUtilities) {
@@ -20,7 +20,7 @@ public class DisjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public boolean applicable(PropositionalClassicalNode proposition) {
+    public boolean applicable(Node proposition) {
         this.node = proposition;
 
         if (proposition.getProposition().charAt(0) == PropositionalUtilities.NEGATION)
@@ -32,7 +32,7 @@ public class DisjunctionRule implements PropositionalClassicalRule {
     }
 
     @Override
-    public List<PropositionalClassicalNode> apply() {
+    public List<Node> apply() {
         String antecedent = node.getProposition().substring(1, splitPosition).trim();
         String consequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 

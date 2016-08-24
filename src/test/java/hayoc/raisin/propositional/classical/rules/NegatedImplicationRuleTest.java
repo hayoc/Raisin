@@ -1,6 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
+import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class NegatedImplicationRuleTest {
     public void negatedImplicationRule() {
         PropositionalClassicalRule rule = new NegatedImplicationRule(new PropositionalClassicalRuleUtilities());
         assertTrue(rule.applicable(new PropositionalClassicalNode("~(((A > B) & (A > C)) > (A > (B & C)))")));
-        List<PropositionalClassicalNode> resultNodes = rule.apply();
+        List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "((A > B) & (A > C))");
         assertEquals(resultNodes.get(0).getChildren().get(0).getProposition(), "~(A > (B & C))");
 

@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.classical.search;
 
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRule;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
+import hayoc.raisin.propositional.common.Node;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
@@ -27,13 +28,13 @@ public class PropositionalClassicalTableauxSearch {
     public boolean start(String goal) {
         PropositionalClassicalNode goalNode = new PropositionalClassicalNode(goal);
 
-        Queue<PropositionalClassicalNode> propositions = new LinkedList<>();
+        Queue<Node> propositions = new LinkedList<>();
         propositions.add(goalNode);
 
         List<PropositionalClassicalRule> rules = new ArrayList<>();
 
         while (!propositions.isEmpty()) {
-            PropositionalClassicalNode proposition = propositions.poll();
+            Node proposition = propositions.poll();
             if (!ruleUtilities.branchClosed(proposition)) {
                 rules.addAll(getApplicableRules(proposition));
                 propositions.addAll(applyRules(rules));
@@ -44,7 +45,7 @@ public class PropositionalClassicalTableauxSearch {
         return allBranchesClosed(goalNode);
     }
 
-    protected List<PropositionalClassicalRule> getApplicableRules(PropositionalClassicalNode proposition) {
+    protected List<PropositionalClassicalRule> getApplicableRules(Node proposition) {
         List<PropositionalClassicalRule> rules = new ArrayList<>();
 
         for (Class<?> clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
@@ -63,13 +64,13 @@ public class PropositionalClassicalTableauxSearch {
         return rules;
     }
 
-    protected Collection<PropositionalClassicalNode> applyRules(List<PropositionalClassicalRule> rules) {
-        Collection<PropositionalClassicalNode> results = new ArrayList<>();
+    protected Collection<Node> applyRules(List<PropositionalClassicalRule> rules) {
+        Collection<Node> results = new ArrayList<>();
         for (PropositionalClassicalRule rule : rules)
             results.addAll(rule.apply());
 
-        Collection<PropositionalClassicalNode> propositions = new ArrayList<>();
-        for (PropositionalClassicalNode result : results) {
+        Collection<Node> propositions = new ArrayList<>();
+        for (Node result : results) {
             propositions.add(result);
             if (CollectionUtils.isNotEmpty(result.getChildren()))
                 propositions.addAll(result.getChildren());
@@ -77,21 +78,21 @@ public class PropositionalClassicalTableauxSearch {
         return propositions;
     }
 
-    protected boolean allBranchesClosed(PropositionalClassicalNode node) {
-        List<PropositionalClassicalNode> leafNodes = new ArrayList<>();
+    protected boolean allBranchesClosed(Node node) {
+        List<Node> leafNodes = new ArrayList<>();
         getLeafNodes(node, leafNodes);
-        for (PropositionalClassicalNode leaf : leafNodes) {
+        for (Node leaf : leafNodes) {
             if (!leaf.isClosed())
                 return false;
         }
         return true;
     }
 
-    private void getLeafNodes(PropositionalClassicalNode node, List<PropositionalClassicalNode> leafNodes) {
+    private void getLeafNodes(Node node, List<Node> leafNodes) {
         if (CollectionUtils.isEmpty(node.getChildren())) {
             leafNodes.add(node);
         } else {
-            for (PropositionalClassicalNode child : node.getChildren()) {
+            for (Node child : node.getChildren()) {
                 getLeafNodes(child, leafNodes);
             }
         }

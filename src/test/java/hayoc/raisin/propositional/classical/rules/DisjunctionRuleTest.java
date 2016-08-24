@@ -1,6 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
+import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class DisjunctionRuleTest {
     public void testDisjunctionRule() {
         PropositionalClassicalRule rule = new DisjunctionRule(new PropositionalClassicalRuleUtilities());
         assertTrue(rule.applicable(new PropositionalClassicalNode("((A & B) | (B & A))")));
-        List<PropositionalClassicalNode> resultNodes = rule.apply();
+        List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "(A & B)");
         assertEquals(resultNodes.get(1).getProposition(), "(B & A)");
 

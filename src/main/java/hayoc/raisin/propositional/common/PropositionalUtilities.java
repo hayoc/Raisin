@@ -1,9 +1,11 @@
 package hayoc.raisin.propositional.common;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 
 import javax.inject.Singleton;
+import java.util.List;
 
 /**
  * Created by Hayo on 17/08/2016.
@@ -20,12 +22,49 @@ public class PropositionalUtilities {
     public static final char DISJUNCTION = '|';
     public static final char CONDITIONAL = '>';
     public static final char BICONDITIONAL = '=';
+    public static final char NECESSITY = '□';
+    public static final char POSSIBILITY = '◊';
     public static final char[] BINARY_CONNECTIVES = {CONJUNCTION, DISJUNCTION, CONDITIONAL, BICONDITIONAL};
+
+    public boolean branchClosed(Node proposition) {
+        if (proposition.isBranchChecked())
+            return proposition.isClosed();
+        Node parent = proposition.getParent();
+        while (parent != null) {
+            if (isNegation(proposition, parent)) {
+                proposition.setClosed(true);
+                return true;
+            }
+            parent = parent.getParent();
+        }
+        proposition.setClosed(false);
+        return false;
+    }
+
+    public void getLowestChildNodes(Node node, List<Node> childNodes) {
+        if (CollectionUtils.isEmpty(node.getChildren())) {
+            childNodes.add(node);
+        } else {
+            for (Node child : node.getChildren()) {
+                getLowestChildNodes(child, childNodes);
+            }
+        }
+    }
 
     public String negate(String goal) throws PropositionalSyntaxException {
         goal = NEGATION + validateParentheses(goal);
         LOG.info("Goal: " + goal);
         return goal;
+    }
+
+    public boolean isNegation(Node propositionNode, Node parentNode) {
+        String proposition = propositionNode.getProposition();
+        String parent = parentNode.getProposition();
+        if (proposition.charAt(0) == PropositionalUtilities.NEGATION) {
+            return proposition.substring(1).equals(parent);
+        } else {
+            return proposition.equals(parent.substring(1));
+        }
     }
 
     private String validateParentheses(String goal) throws PropositionalSyntaxException {
