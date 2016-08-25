@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * Created by Hayo on 25/08/2016.
  */
-public abstract class AbstractConjunctionRule implements Rule{
+public class AbstractNegatedDisjunctionRule implements Rule {
 
     private RuleUtilities ruleUtilities;
 
     private Node node;
     private int splitPosition;
 
-    public AbstractConjunctionRule(RuleUtilities ruleUtilities) {
+    public AbstractNegatedDisjunctionRule(RuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;
     }
 
@@ -23,18 +23,18 @@ public abstract class AbstractConjunctionRule implements Rule{
     public boolean applicable(Node proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
+        if (proposition.getProposition().charAt(0) != AbstractRuleUtilities.NEGATION || proposition.getProposition().charAt(1) == AbstractRuleUtilities.NEGATION)
             return false;
 
-        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONJUNCTION);
+        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.DISJUNCTION);
 
         return splitPosition != 0;
     }
 
     @Override
     public List<Node> apply() {
-        String antecedent = node.getProposition().substring(1, splitPosition).trim();
-        String consequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
+        String antecedent = AbstractRuleUtilities.NEGATION + node.getProposition().substring(2, splitPosition).trim();
+        String consequent = AbstractRuleUtilities.NEGATION + node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 
         return ruleUtilities.createSameBranchChildren(node, antecedent, consequent);
     }

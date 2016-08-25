@@ -38,6 +38,6 @@ public class NecessityRule implements Rule {
 
     @Override
     public List<Node> apply() {
-        return Collections.singletonList(new PropositionalModalNode(proposition.getProposition(), proposition, null, relativeWorld));
+        return Collections.singletonList(new PropositionalModalNode(proposition.getProposition().substring(1), proposition, null, relativeWorld));
     }
 }

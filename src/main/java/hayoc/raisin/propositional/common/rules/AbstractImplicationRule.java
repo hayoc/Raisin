@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * Created by Hayo on 25/08/2016.
  */
-public abstract class AbstractConjunctionRule implements Rule{
+public class AbstractImplicationRule implements Rule {
 
     private RuleUtilities ruleUtilities;
 
     private Node node;
     private int splitPosition;
 
-    public AbstractConjunctionRule(RuleUtilities ruleUtilities) {
+    public AbstractImplicationRule(RuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;
     }
 
@@ -26,16 +26,16 @@ public abstract class AbstractConjunctionRule implements Rule{
         if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
             return false;
 
-        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONJUNCTION);
+        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONDITIONAL);
 
         return splitPosition != 0;
     }
 
     @Override
     public List<Node> apply() {
-        String antecedent = node.getProposition().substring(1, splitPosition).trim();
+        String antecedent = AbstractRuleUtilities.NEGATION + node.getProposition().substring(1, splitPosition).trim();
         String consequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
 
-        return ruleUtilities.createSameBranchChildren(node, antecedent, consequent);
+        return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
     }
 }

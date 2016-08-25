@@ -4,6 +4,7 @@ import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.propositional.common.rules.Rule;
+import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,8 @@ public class DoubleNegationRule implements Rule {
 
     @Override
     public List<Node> apply() {
-        Node result = new PropositionalClassicalNode(node.getProposition().substring(2).trim(), node, null);
+        PropositionalModalNode modalNode = (PropositionalModalNode) node;
+        Node result = new PropositionalModalNode(node.getProposition().substring(2).trim(), node, null, modalNode.getWorld());
         return Collections.singletonList(result);
     }
 }
