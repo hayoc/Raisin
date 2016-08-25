@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.propositional.common.rules.Rule;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class ConjunctionRuleTest {
 
     @Test
     public void testConjunctionRule() {
-        PropositionalClassicalRule rule = new ConjunctionRule(new PropositionalClassicalRuleUtilities());
+        Rule rule = new ConjunctionRule(new PropositionalClassicalRuleUtilities());
         assertTrue(rule.applicable(new PropositionalClassicalNode("(((A > B) & (A > C)) & (A > (B & C)))")));
         List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "((A > B) & (A > C))");

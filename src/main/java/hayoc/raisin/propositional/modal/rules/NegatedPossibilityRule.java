@@ -1,20 +1,35 @@
 package hayoc.raisin.propositional.modal.rules;
 
+import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
+import hayoc.raisin.propositional.common.rules.Rule;
 import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Hayo on 24/08/2016.
  */
-public class NegatedPossibilityRule implements PropositionalModalRule{
-    @Override
-    public boolean applicable(PropositionalModalNode proposition) {
-        return false;
+public class NegatedPossibilityRule implements Rule {
+
+    private PropositionalModalRuleUtilities ruleUtilities;
+
+    private PropositionalModalNode node;
+
+    public NegatedPossibilityRule(PropositionalModalRuleUtilities ruleUtilities) {
+        this.ruleUtilities = ruleUtilities;
     }
 
     @Override
-    public List<PropositionalModalNode> apply() {
-        return null;
+    public boolean applicable(Node proposition) {
+        this.node =  (PropositionalModalNode) proposition;
+        return proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION && proposition.getProposition().charAt(1) == AbstractRuleUtilities.POSSIBILITY;
+    }
+
+    @Override
+    public List<Node> apply() {
+        Node result = new PropositionalModalNode(AbstractRuleUtilities.NECESSITY + AbstractRuleUtilities.NEGATION + node.getProposition().substring(2), node, null, node.getWorld());
+        return Collections.singletonList(result);
     }
 }

@@ -7,16 +7,16 @@ import hayoc.raisin.propositional.common.rules.Rule;
 import java.util.List;
 
 /**
- * Created by Hayo on 24/08/2016.
+ * Created by Hayo on 25/08/2016.
  */
-public class NegatedBiconditionalRule implements Rule {
+public class ImplicationRule implements Rule {
 
     private PropositionalModalRuleUtilities ruleUtilities;
 
     private Node node;
     private int splitPosition;
 
-    public NegatedBiconditionalRule(PropositionalModalRuleUtilities ruleUtilities) {
+    public ImplicationRule(PropositionalModalRuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;
     }
 
@@ -24,10 +24,10 @@ public class NegatedBiconditionalRule implements Rule {
     public boolean applicable(Node proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) != AbstractRuleUtilities.NEGATION || proposition.getProposition().charAt(1) == AbstractRuleUtilities.NEGATION)
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
             return false;
 
-        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.BICONDITIONAL);
+        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONDITIONAL);
 
         return splitPosition != 0;
     }

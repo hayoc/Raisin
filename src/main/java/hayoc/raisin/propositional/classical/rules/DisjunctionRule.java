@@ -1,14 +1,15 @@
 package hayoc.raisin.propositional.classical.rules;
 
-import hayoc.raisin.propositional.common.PropositionalUtilities;
+import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.propositional.common.rules.Rule;
 
 import java.util.List;
 
 /**
  * Created by Hayo on 17/08/2016.
  */
-public class DisjunctionRule implements PropositionalClassicalRule {
+public class DisjunctionRule implements Rule {
 
     private PropositionalClassicalRuleUtilities ruleUtilities;
 
@@ -23,10 +24,10 @@ public class DisjunctionRule implements PropositionalClassicalRule {
     public boolean applicable(Node proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) == PropositionalUtilities.NEGATION)
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
             return false;
 
-        splitPosition = ruleUtilities.getConnectivePosition(proposition, PropositionalUtilities.DISJUNCTION);
+        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.DISJUNCTION);
 
         return splitPosition != 0;
     }

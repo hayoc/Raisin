@@ -2,8 +2,7 @@ package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.PropositionalUtilities;
-import org.apache.commons.collections4.CollectionUtils;
+import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +10,20 @@ import java.util.List;
 /**
  * Created by Hayo on 18/08/2016.
  */
-public class PropositionalClassicalRuleUtilities extends PropositionalUtilities {
+public class PropositionalClassicalRuleUtilities extends AbstractRuleUtilities {
 
     public static final Class[] PROPOSITIONAL_CLASSICAL_RULES = {BiconditionalRule.class, ConjunctionRule.class, DisjunctionRule.class, DoubleNegationRule.class,
                                                                     ImplicationRule.class, NegatedBiconditionalRule.class, NegatedConjunctionRule.class,
                                                                     NegatedDisjunctionRule.class, NegatedImplicationRule.class};
 
 
-    protected int getConnectivePosition(Node proposition, char connective) {
+    public int getConnectivePosition(Node proposition, char connective) {
         int parentheses = 0;
         for (int i = 0; i < proposition.getProposition().length(); i++) {
             char c = proposition.getProposition().charAt(i);
-            if (c == PropositionalUtilities.OPEN_PARENTHESIS)
+            if (c == AbstractRuleUtilities.OPEN_PARENTHESIS)
                 parentheses++;
-            if (c == PropositionalUtilities.CLOSE_PARENTHESIS)
+            if (c == AbstractRuleUtilities.CLOSE_PARENTHESIS)
                 parentheses--;
 
             if (parentheses == 1 && c == connective)
@@ -34,7 +33,7 @@ public class PropositionalClassicalRuleUtilities extends PropositionalUtilities 
         return 0;
     }
 
-    protected List<Node> createSameBranchChildren(Node parent, String antecedent, String consequent) {
+    public List<Node> createSameBranchChildren(Node parent, String antecedent, String consequent) {
         List<Node> nodes = new ArrayList<>();
 
         List<Node> childNodes = new ArrayList<>();
@@ -56,7 +55,7 @@ public class PropositionalClassicalRuleUtilities extends PropositionalUtilities 
         return nodes;
     }
 
-    protected List<Node> createSeparateBranchChildren(Node parent, String antecedent, String consequent) {
+    public List<Node> createSeparateBranchChildren(Node parent, String antecedent, String consequent) {
         List<Node> nodes = new ArrayList<>();
 
         List<Node> childNodes = new ArrayList<>();

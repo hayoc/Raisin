@@ -1,11 +1,10 @@
 package hayoc.raisin.propositional.common;
 
-import hayoc.raisin.propositional.classical.PropositionalClassicalLogic;
+import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
+import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
@@ -24,7 +23,7 @@ public class PropositionalUtilitiesTest {
     private static final String TARGET = "~(((A > B) & (A > C)) > (A > (B & C)))";
 
     @Inject
-    private PropositionalUtilities propositionalUtilities;
+    private PropositionalClassicalRuleUtilities propositionalUtilities;
 
     @Test
     public void testSimpleNegation() {

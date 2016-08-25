@@ -1,19 +1,19 @@
-package hayoc.raisin.propositional.common;
+package hayoc.raisin.propositional.common.rules;
 
+import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 
-import javax.inject.Singleton;
 import java.util.List;
 
 /**
  * Created by Hayo on 17/08/2016.
  */
-@Singleton
-public class PropositionalUtilities {
+public abstract class AbstractRuleUtilities implements RuleUtilities {
 
-    private static final Logger LOG = Logger.getLogger(PropositionalUtilities.class);
+    private static final Logger LOG = Logger.getLogger(AbstractRuleUtilities.class);
 
     public static final char NEGATION = '~';
     public static final char OPEN_PARENTHESIS = '(';
@@ -60,14 +60,14 @@ public class PropositionalUtilities {
     public boolean isNegation(Node propositionNode, Node parentNode) {
         String proposition = propositionNode.getProposition();
         String parent = parentNode.getProposition();
-        if (proposition.charAt(0) == PropositionalUtilities.NEGATION) {
+        if (proposition.charAt(0) == AbstractRuleUtilities.NEGATION) {
             return proposition.substring(1).equals(parent);
         } else {
             return proposition.equals(parent.substring(1));
         }
     }
 
-    private String validateParentheses(String goal) throws PropositionalSyntaxException {
+    public String validateParentheses(String goal) throws PropositionalSyntaxException {
         int inBrackets = 0;
         int parentheses = 0;
         boolean modify = false;

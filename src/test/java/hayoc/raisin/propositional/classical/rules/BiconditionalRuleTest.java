@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.propositional.common.rules.Rule;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class BiconditionalRuleTest {
 
     @Test
     public void testBiconditionalRule() {
-        PropositionalClassicalRule rule = new BiconditionalRule(new PropositionalClassicalRuleUtilities());
+        Rule rule = new BiconditionalRule(new PropositionalClassicalRuleUtilities());
         assertTrue(rule.applicable(new PropositionalClassicalNode("((A & B) = (B & A))")));
 
         List<Node> resultNodes = rule.apply();

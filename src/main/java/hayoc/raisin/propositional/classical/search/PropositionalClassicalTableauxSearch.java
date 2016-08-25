@@ -1,8 +1,8 @@
 package hayoc.raisin.propositional.classical.search;
 
-import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRule;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
 import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.propositional.common.rules.Rule;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
@@ -31,7 +31,7 @@ public class PropositionalClassicalTableauxSearch {
         Queue<Node> propositions = new LinkedList<>();
         propositions.add(goalNode);
 
-        List<PropositionalClassicalRule> rules = new ArrayList<>();
+        List<Rule> rules = new ArrayList<>();
 
         while (!propositions.isEmpty()) {
             Node proposition = propositions.poll();
@@ -45,15 +45,15 @@ public class PropositionalClassicalTableauxSearch {
         return allBranchesClosed(goalNode);
     }
 
-    protected List<PropositionalClassicalRule> getApplicableRules(Node proposition) {
-        List<PropositionalClassicalRule> rules = new ArrayList<>();
+    protected List<Rule> getApplicableRules(Node proposition) {
+        List<Rule> rules = new ArrayList<>();
 
         for (Class<?> clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
             try {
                 Constructor<?> constructor =
                         clazz.getConstructor(PropositionalClassicalRuleUtilities.class);
-                PropositionalClassicalRule rule =
-                         (PropositionalClassicalRule) constructor.newInstance(new PropositionalClassicalRuleUtilities());
+                Rule rule =
+                         (Rule) constructor.newInstance(new PropositionalClassicalRuleUtilities());
                 if (rule.applicable(proposition))
                     rules.add(rule);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -64,9 +64,9 @@ public class PropositionalClassicalTableauxSearch {
         return rules;
     }
 
-    protected Collection<Node> applyRules(List<PropositionalClassicalRule> rules) {
+    protected Collection<Node> applyRules(List<Rule> rules) {
         Collection<Node> results = new ArrayList<>();
-        for (PropositionalClassicalRule rule : rules)
+        for (Rule rule : rules)
             results.addAll(rule.apply());
 
         Collection<Node> propositions = new ArrayList<>();

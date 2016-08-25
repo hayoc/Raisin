@@ -1,6 +1,5 @@
 package hayoc.raisin.propositional.classical;
 
-import hayoc.raisin.propositional.common.PropositionalUtilities;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
