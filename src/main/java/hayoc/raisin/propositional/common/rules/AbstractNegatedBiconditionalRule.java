@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class AbstractNegatedBiconditionalRule implements Rule {
 
-    private RuleUtilities ruleUtilities;
+    protected RuleUtilities ruleUtilities;
 
-    private Node node;
-    private int splitPosition;
+    protected Node node;
+    protected int splitPosition;
 
     public AbstractNegatedBiconditionalRule(RuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;

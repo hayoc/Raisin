@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class AbstractDisjunctionRule implements Rule {
 
-    private RuleUtilities ruleUtilities;
+    protected RuleUtilities ruleUtilities;
 
-    private Node node;
-    private int splitPosition;
+    protected Node node;
+    protected int splitPosition;
 
     public AbstractDisjunctionRule(RuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;

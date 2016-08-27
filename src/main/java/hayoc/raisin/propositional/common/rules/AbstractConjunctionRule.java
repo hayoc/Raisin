@@ -10,10 +10,10 @@ import java.util.List;
  */
 public abstract class AbstractConjunctionRule implements Rule{
 
-    private RuleUtilities ruleUtilities;
+    protected RuleUtilities ruleUtilities;
 
-    private Node node;
-    private int splitPosition;
+    protected Node node;
+    protected int splitPosition;
 
     public AbstractConjunctionRule(RuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;

@@ -24,6 +24,7 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
     public static final char BICONDITIONAL = '=';
     public static final char NECESSITY = '□';
     public static final char POSSIBILITY = '◊';
+    public static final char WORLD_SEPARATOR = ',';
     public static final char[] BINARY_CONNECTIVES = {CONJUNCTION, DISJUNCTION, CONDITIONAL, BICONDITIONAL};
 
     public boolean branchClosed(Node proposition) {

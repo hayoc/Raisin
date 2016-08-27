@@ -26,7 +26,7 @@ public class NegatedImplicationRuleTest {
         Rule rule = new NegatedImplicationRule(new PropositionalModalRuleUtilities());
         assertTrue(rule.applicable(new PropositionalModalNode("~(A > B), 1")));
         List<Node> resultNodes = rule.apply();
-        assertEquals(resultNodes.get(0).getProposition(), "A, 1)");
+        assertEquals(resultNodes.get(0).getProposition(), "A, 1");
         assertEquals(resultNodes.get(0).getChildren().get(0).getProposition(), "~B, 1");
 
         assertFalse(rule.applicable(new PropositionalModalNode("~(A & B), 1")));

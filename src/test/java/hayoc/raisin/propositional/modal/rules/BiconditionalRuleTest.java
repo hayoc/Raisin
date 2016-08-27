@@ -34,6 +34,5 @@ public class BiconditionalRuleTest {
 
         assertFalse(rule.applicable(new PropositionalModalNode("~(A = B), 1")));
         assertFalse(rule.applicable(new PropositionalModalNode("(A > B), 1")));
-
     }
 }

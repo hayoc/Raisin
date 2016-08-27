@@ -10,10 +10,10 @@ import java.util.List;
  */
 public class AbstractNegatedImplicationRule implements Rule {
 
-    private RuleUtilities ruleUtilities;
+    protected RuleUtilities ruleUtilities;
 
-    private Node node;
-    private int splitPosition;
+    protected Node node;
+    protected int splitPosition;
 
     public AbstractNegatedImplicationRule(RuleUtilities ruleUtilities) {
         this.ruleUtilities = ruleUtilities;
