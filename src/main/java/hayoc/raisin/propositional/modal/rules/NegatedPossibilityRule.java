@@ -29,7 +29,7 @@ public class NegatedPossibilityRule implements Rule {
 
     @Override
     public List<Node> apply() {
-        Node result = new PropositionalModalNode(AbstractRuleUtilities.NECESSITY + AbstractRuleUtilities.NEGATION + node.getProposition().substring(2), node, null, node.getWorld());
-        return Collections.singletonList(result);
+        return ruleUtilities.createSingleChild(node, Character.toString(AbstractRuleUtilities.NECESSITY)
+                + Character.toString(AbstractRuleUtilities.NEGATION) + node.getProposition().substring(2));
     }
 }

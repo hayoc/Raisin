@@ -3,10 +3,7 @@ package hayoc.raisin.propositional.modal.rules;
 import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.AbstractImplicationRule;
 import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
-import hayoc.raisin.propositional.common.rules.Rule;
-import hayoc.raisin.propositional.common.rules.RuleUtilities;
 import hayoc.raisin.propositional.modal.ModalUtilities;
-import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 
 import java.util.List;
 
@@ -15,19 +12,16 @@ import java.util.List;
  */
 public class ImplicationRule extends AbstractImplicationRule {
 
-    private PropositionalModalNode modalNode;
-
     public ImplicationRule(PropositionalModalRuleUtilities ruleUtilities) {
         super(ruleUtilities);
     }
 
     @Override
     public boolean applicable(Node proposition) {
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
-            return false;
+        this.node = proposition;
 
-        modalNode = (PropositionalModalNode) proposition;
-        modalNode.setWorld(ModalUtilities.getWorld(modalNode));
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION || ModalUtilities.isModal(node))
+            return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONDITIONAL);
 
@@ -36,11 +30,11 @@ public class ImplicationRule extends AbstractImplicationRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(modalNode);
+        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
 
-        String antecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.addWorld(modalNode.getWorld().getWorld());
-        String consequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.addWorld(modalNode.getWorld().getWorld());
+        String antecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String consequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
 
-        return ruleUtilities.createSeparateBranchChildren(modalNode, antecedent, consequent);
+        return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 public class PropositionalModalNode implements Node {
 
     private String proposition;
-    private WorldNode world;
 
     private Node parent;
     private List<Node> children;
@@ -35,27 +34,12 @@ public class PropositionalModalNode implements Node {
         this.children = children;
     }
 
-    public PropositionalModalNode(String proposition, Node parent, List<Node> children, WorldNode world) {
-        this.proposition = proposition;
-        this.parent = parent;
-        this.children = children;
-        this.world = world;
-    }
-
     public String getProposition() {
         return proposition;
     }
 
     public void setProposition(String proposition) {
         this.proposition = proposition;
-    }
-
-    public WorldNode getWorld() {
-        return world;
-    }
-
-    public void setWorld(WorldNode world) {
-        this.world = world;
     }
 
     public Node getParent() {

@@ -39,7 +39,7 @@ public class PropositionalModalLogic {
     public static void main(String[] args) {
         RaisinModule module = new RaisinModule();
         Injector injector = Guice.createInjector(module);
-        if (injector.getInstance(PropositionalModalLogic.class).prove("")) {
+        if (injector.getInstance(PropositionalModalLogic.class).prove("(◊(A & B) > (◊A & ◊B)), 1")) {
             System.out.println("Valid");
         } else {
             System.out.println("Invalid");

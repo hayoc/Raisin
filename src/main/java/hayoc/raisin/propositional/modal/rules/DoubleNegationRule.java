@@ -30,8 +30,7 @@ public class DoubleNegationRule implements Rule {
 
     @Override
     public List<Node> apply() {
-        PropositionalModalNode modalNode = (PropositionalModalNode) node;
-        Node result = new PropositionalModalNode(node.getProposition().substring(2).trim(), node, null, modalNode.getWorld());
+        Node result = new PropositionalModalNode(node.getProposition().substring(2).trim(), node, null);
         return Collections.singletonList(result);
     }
 }

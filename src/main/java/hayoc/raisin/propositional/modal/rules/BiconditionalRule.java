@@ -4,8 +4,6 @@ import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.AbstractBiconditionalRule;
 import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.propositional.modal.ModalUtilities;
-import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
-import hayoc.raisin.propositional.modal.search.WorldNode;
 import org.apache.commons.collections4.ListUtils;
 
 import java.util.List;
@@ -15,19 +13,16 @@ import java.util.List;
  */
 public class BiconditionalRule extends AbstractBiconditionalRule {
 
-    private PropositionalModalNode modalNode;
-
     public BiconditionalRule(PropositionalModalRuleUtilities ruleUtilities) {
         super(ruleUtilities);
     }
 
     @Override
     public boolean applicable(Node proposition) {
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
-            return false;
+        this.node = proposition;
 
-        modalNode = (PropositionalModalNode) proposition;
-        modalNode.setWorld(ModalUtilities.getWorld(modalNode));
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION && !ModalUtilities.isModal(proposition))
+            return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.BICONDITIONAL);
 
@@ -36,15 +31,15 @@ public class BiconditionalRule extends AbstractBiconditionalRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(modalNode);
+        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
 
-        String firstAntecedent = nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.addWorld(modalNode.getWorld().getWorld());
-        String firstConsequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.addWorld(modalNode.getWorld().getWorld());
-        String secondAntecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.addWorld(modalNode.getWorld().getWorld());
-        String secondConsequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.addWorld(modalNode.getWorld().getWorld());
+        String firstAntecedent = nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String firstConsequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String secondAntecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String secondConsequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
 
-        List<Node> firstSet = ruleUtilities.createSameBranchChildren(modalNode, firstAntecedent, firstConsequent);
-        List<Node> secondSet = ruleUtilities.createSameBranchChildren(modalNode, secondAntecedent, secondConsequent);
+        List<Node> firstSet = ruleUtilities.createSameBranchChildren(node, firstAntecedent, firstConsequent);
+        List<Node> secondSet = ruleUtilities.createSameBranchChildren(node, secondAntecedent, secondConsequent);
 
         return ListUtils.union(firstSet, secondSet);
     }

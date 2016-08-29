@@ -93,4 +93,5 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
         }
         return modify ? OPEN_PARENTHESIS + goal + CLOSE_PARENTHESIS : goal;
     }
+
 }

@@ -1,11 +1,9 @@
 package hayoc.raisin.propositional.modal.rules;
 
-import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
-import hayoc.raisin.propositional.common.rules.RuleUtilities;
-import hayoc.raisin.propositional.modal.search.WorldNode;
 import hayoc.raisin.propositional.common.Node;
-import org.apache.commons.lang3.StringUtils;
+import hayoc.raisin.propositional.modal.ModalUtilities;
+import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +13,24 @@ import java.util.List;
  */
 public class PropositionalModalRuleUtilities extends AbstractRuleUtilities {
 
-    protected WorldNode getRelativeWorld(WorldNode world) {
-        return null;
-    }
+    public static final Class[] PROPOSITIONAL_MODAL_RULES = {BiconditionalRule.class, ConjunctionRule.class, DisjunctionRule.class, DoubleNegationRule.class,
+            ImplicationRule.class, NecessityRule.class, NegatedBiconditionalRule.class, NegatedConjunctionRule.class, NegatedDisjunctionRule.class, NegatedImplicationRule.class,
+            NegatedNeccesityRule.class, NegatedPossibilityRule.class, PossibilityRule.class};
 
-    protected WorldNode setRelativeWorld(WorldNode world) {
-        return null;
+    @Override
+    public boolean branchClosed(Node proposition) {
+        if (proposition.isBranchChecked())
+            return proposition.isClosed();
+        Node parent = proposition.getParent();
+        while (parent != null) {
+            if (isNegation(proposition, parent)) {
+                proposition.setClosed(true);
+                return true;
+            }
+            parent = parent.getParent();
+        }
+        proposition.setClosed(false);
+        return false;
     }
 
     public int getConnectivePosition(Node proposition, char connective) {
@@ -39,6 +49,21 @@ public class PropositionalModalRuleUtilities extends AbstractRuleUtilities {
         return 0;
     }
 
+    public List<Node> createSingleChild(Node parent, String proposition) {
+        List<Node> nodes = new ArrayList<>();
+        List<Node> childNodes = new ArrayList<>();
+        getLowestChildNodes(parent, childNodes);
+        for (Node node : childNodes) {
+            if (branchClosed(node))
+                continue;
+            nodes.clear();
+            Node childNode = new PropositionalModalNode(proposition, node, null);
+            nodes.add(childNode);
+            node.setChildren(nodes);
+        }
+        return nodes;
+    }
+
     public List<Node> createSameBranchChildren(Node parent, String antecedent, String consequent) {
         List<Node> nodes = new ArrayList<>();
 
@@ -49,10 +74,10 @@ public class PropositionalModalRuleUtilities extends AbstractRuleUtilities {
                 continue;
             nodes.clear();
             List<Node> newChildren = new ArrayList<>();
-            Node consequentNode = new PropositionalClassicalNode(consequent, null, null);
+            Node consequentNode = new PropositionalModalNode(consequent, null, null);
             newChildren.add(consequentNode);
 
-            Node antecedentNode = new PropositionalClassicalNode(antecedent, node, newChildren);
+            Node antecedentNode = new PropositionalModalNode(antecedent, node, newChildren);
             consequentNode.setParent(antecedentNode);
             nodes.add(antecedentNode);
             node.setChildren(nodes);
@@ -70,11 +95,22 @@ public class PropositionalModalRuleUtilities extends AbstractRuleUtilities {
             if (branchClosed(node))
                 continue;
             nodes.clear();
-            nodes.add(new PropositionalClassicalNode(antecedent, node, null));
-            nodes.add(new PropositionalClassicalNode(consequent, node, null));
+            nodes.add(new PropositionalModalNode(antecedent, node, null));
+            nodes.add(new PropositionalModalNode(consequent, node, null));
             node.setChildren(nodes);
         }
 
         return nodes;
+    }
+
+    @Override
+    public boolean isNegation(Node propositionNode, Node parentNode) {
+        String proposition = propositionNode.getProposition();
+        String parent = parentNode.getProposition();
+        if (proposition.charAt(0) == AbstractRuleUtilities.NEGATION && ModalUtilities.getWorld(propositionNode) == ModalUtilities.getWorld(parentNode)) {
+            return proposition.substring(1).equals(parent);
+        } else {
+            return proposition.equals(parent.substring(1));
+        }
     }
 }

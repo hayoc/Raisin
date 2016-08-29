@@ -1,9 +1,5 @@
 package hayoc.raisin.propositional.modal.rules;
 
-import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.Rule;
 import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
@@ -27,8 +23,18 @@ public class PropositionalModalRuleUtilitiesTest {
     private PropositionalModalRuleUtilities ruleUtilities = new PropositionalModalRuleUtilities();
 
     @Test
-    public void dummy() {
-        assertTrue(true);
-    }
+    public void testIsNegation() {
+        PropositionalModalNode childNode = new PropositionalModalNode("~(A > C), 0");
+        PropositionalModalNode parentNode = new PropositionalModalNode("(A > C), 0");
+        assertTrue(ruleUtilities.isNegation(childNode, parentNode));
 
+        parentNode.setProposition("~(A > C), 0");
+        assertFalse(ruleUtilities.isNegation(childNode, parentNode));
+
+        childNode.setProposition("(A > C), 0");
+        assertTrue(ruleUtilities.isNegation(childNode, parentNode));
+
+        parentNode.setProposition("~(A > C), 1");
+        assertFalse(ruleUtilities.isNegation(childNode, parentNode));
+    }
 }
