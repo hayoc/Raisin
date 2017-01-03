@@ -22,20 +22,22 @@ import static org.junit.Assert.assertTrue;
 @GuiceJUnitRunner.GuiceModules({TestModule.class})
 public class PossibilityRuleTest {
 
+    private ModalUtilities modalUtilities = new ModalUtilities();
+
     @Test
     public void testPossibilityRule() {
-        Rule rule = new PossibilityRule(new PropositionalModalRuleUtilities());
+        Rule rule = new PossibilityRule(new PropositionalModalRuleUtilities(modalUtilities), modalUtilities);
         Node testNode = new PropositionalModalNode("◊(A = B), 1");
         assertTrue(rule.applicable(testNode));
 
         List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "(A = B), 2");
 
-        assertEquals(ModalUtilities.getRelativeWorld(testNode), 2);
+        assertEquals(modalUtilities.getRelativeWorld(testNode), 2);
 
         assertFalse(rule.applicable(new PropositionalModalNode("□(A = B), 1")));
         assertFalse(rule.applicable(new PropositionalModalNode("~◊(A > B), 1")));
 
-        ModalUtilities.clearRelativeWorlds();
+        modalUtilities.clearRelativeWorlds();
     }
 }

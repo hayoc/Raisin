@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Hayo on 25/08/2016.
  */
-public abstract class AbstractConjunctionRule implements Rule{
+public abstract class AbstractConjunctionRule implements Rule {
 
     protected RuleUtilities ruleUtilities;
 

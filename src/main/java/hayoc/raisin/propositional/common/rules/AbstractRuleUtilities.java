@@ -27,6 +27,22 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
     public static final char WORLD_SEPARATOR = ',';
     public static final char[] BINARY_CONNECTIVES = {CONJUNCTION, DISJUNCTION, CONDITIONAL, BICONDITIONAL};
 
+    public int getConnectivePosition(Node proposition, char connective) {
+        int parentheses = 0;
+        for (int i = 0; i < proposition.getProposition().length(); i++) {
+            char c = proposition.getProposition().charAt(i);
+            if (c == AbstractRuleUtilities.OPEN_PARENTHESIS)
+                parentheses++;
+            if (c == AbstractRuleUtilities.CLOSE_PARENTHESIS)
+                parentheses--;
+
+            if (parentheses == 1 && c == connective)
+                return i;
+        }
+
+        return 0;
+    }
+
     public boolean branchClosed(Node proposition) {
         if (proposition.isBranchChecked())
             return proposition.isClosed();

@@ -18,41 +18,33 @@ import java.util.Map;
  */
 public class ModalUtilities {
 
-    private static Map<Integer, List<Integer>> relativeWorlds = new HashMap<>();
+    private Map<Integer, List<Integer>> relativeWorlds = new HashMap<>();
 
-    public static int getWorld(Node node) {
+    public int getWorld(Node node) {
         String world = StringUtils.substringAfter(node.getProposition(), Character.toString(AbstractRuleUtilities.WORLD_SEPARATOR)).trim();
         return Integer.parseInt(world);
     }
 
-    public static String getNonModalProposition(Node node) {
+    public String getNonModalProposition(Node node) {
         return StringUtils.substringBefore(node.getProposition(), Character.toString(AbstractRuleUtilities.WORLD_SEPARATOR));
     }
 
-    public static String writeWorld(int world) {
+    public String writeWorld(int world) {
         return AbstractRuleUtilities.WORLD_SEPARATOR + StringUtils.SPACE + world;
     }
 
-    public static void clearRelativeWorlds() {
+    public void clearRelativeWorlds() {
         relativeWorlds.clear();
     }
 
-    public static int getRelativeWorld(Node node) {
+    public int getRelativeWorld(Node node) {
         List<Integer> worlds = relativeWorlds.get(getWorld(node));
         if (CollectionUtils.isEmpty(worlds))
             return -1;
         return worlds.get(0);
     }
 
-    public static boolean isRelativeWorld(int worldA, int worldB) {
-        for (int world : relativeWorlds.get(worldA)) {
-            if (world == worldB)
-                return true;
-        }
-        return false;
-    }
-
-    public static void addRelativeWorld(int worldA, int worldB) {
+    public void addRelativeWorld(int worldA, int worldB) {
         List<Integer> worldsA = relativeWorlds.get(worldA) == null ? new ArrayList<>() : relativeWorlds.get(worldA);
         worldsA.add(worldB);
 
@@ -63,7 +55,7 @@ public class ModalUtilities {
         relativeWorlds.put(worldB, worldsB);
     }
 
-    public static boolean isModal(Node node) {
+    public boolean isModal(Node node) {
         return node.getProposition().charAt(0) == AbstractRuleUtilities.POSSIBILITY || node.getProposition().charAt(0) == AbstractRuleUtilities.NECESSITY
                 || node.getProposition().charAt(1) == AbstractRuleUtilities.POSSIBILITY || node.getProposition().charAt(1) == AbstractRuleUtilities.NECESSITY;
     }

@@ -11,9 +11,12 @@ import java.util.List;
  * Created by Hayo on 25/08/2016.
  */
 public class NegatedImplicationRule  extends AbstractNegatedImplicationRule {
+    
+    private ModalUtilities modalUtilities;
 
-    public NegatedImplicationRule(PropositionalModalRuleUtilities ruleUtilities) {
+    public NegatedImplicationRule(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         super(ruleUtilities);
+        this.modalUtilities = modalUtilities;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class NegatedImplicationRule  extends AbstractNegatedImplicationRule {
         this.node = proposition;
 
         if (proposition.getProposition().charAt(0) != AbstractRuleUtilities.NEGATION || proposition.getProposition().charAt(1) == AbstractRuleUtilities.NEGATION &&
-                ModalUtilities.isModal(node))
+                modalUtilities.isModal(node))
             return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONDITIONAL);
@@ -31,10 +34,10 @@ public class NegatedImplicationRule  extends AbstractNegatedImplicationRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
+        String nonmodalProposition = modalUtilities.getNonModalProposition(node);
 
-        String antecedent = nonmodalProposition.substring(2, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String consequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String antecedent = nonmodalProposition.substring(2, splitPosition).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String consequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
 
         return ruleUtilities.createSameBranchChildren(node, antecedent, consequent);
     }

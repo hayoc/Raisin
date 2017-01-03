@@ -13,15 +13,18 @@ import java.util.List;
  */
 public class BiconditionalRule extends AbstractBiconditionalRule {
 
-    public BiconditionalRule(PropositionalModalRuleUtilities ruleUtilities) {
+    private ModalUtilities modalUtilities;
+
+    public BiconditionalRule(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         super(ruleUtilities);
+        this.modalUtilities = modalUtilities;
     }
 
     @Override
     public boolean applicable(Node proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION && !ModalUtilities.isModal(proposition))
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION && !modalUtilities.isModal(proposition))
             return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.BICONDITIONAL);
@@ -31,12 +34,12 @@ public class BiconditionalRule extends AbstractBiconditionalRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
+        String nonmodalProposition = modalUtilities.getNonModalProposition(node);
 
-        String firstAntecedent = nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String firstConsequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String secondAntecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String secondConsequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String firstAntecedent = nonmodalProposition.substring(1, splitPosition).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String firstConsequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String secondAntecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String secondConsequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
 
         List<Node> firstSet = ruleUtilities.createSameBranchChildren(node, firstAntecedent, firstConsequent);
         List<Node> secondSet = ruleUtilities.createSameBranchChildren(node, secondAntecedent, secondConsequent);

@@ -2,6 +2,7 @@ package hayoc.raisin.propositional.modal.rules;
 
 import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.Rule;
+import hayoc.raisin.propositional.modal.ModalUtilities;
 import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
@@ -21,9 +22,11 @@ import static org.junit.Assert.assertTrue;
 @GuiceJUnitRunner.GuiceModules({TestModule.class})
 public class NegatedDisjunctionRuleTest {
 
+    private ModalUtilities modalUtilities = new ModalUtilities();
+
     @Test
     public void testNegatedDisjunctionRule() {
-        Rule rule = new NegatedDisjunctionRule(new PropositionalModalRuleUtilities());
+        Rule rule = new NegatedDisjunctionRule(new PropositionalModalRuleUtilities(modalUtilities), modalUtilities);
         assertTrue(rule.applicable(new PropositionalModalNode("~(A | B), 1")));
         List<Node> resultNodes = rule.apply();
         assertEquals(resultNodes.get(0).getProposition(), "~A, 1");

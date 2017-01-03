@@ -5,6 +5,7 @@ import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalTableauxSearch;
 import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.Rule;
+import hayoc.raisin.propositional.modal.ModalUtilities;
 import hayoc.raisin.propositional.modal.rules.PropositionalModalRuleUtilities;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -22,10 +23,12 @@ public class PropositionalModalTableauxSearch {
     private static final Logger LOG = Logger.getLogger(PropositionalModalTableauxSearch.class);
 
     private PropositionalModalRuleUtilities ruleUtilities;
+    private ModalUtilities modalUtilities;
 
     @Inject
-    public PropositionalModalTableauxSearch(PropositionalModalRuleUtilities ruleUtilities) {
+    public PropositionalModalTableauxSearch(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         this.ruleUtilities = ruleUtilities;
+        this.modalUtilities = modalUtilities;
     }
 
     public boolean start(String goal) {
@@ -56,7 +59,7 @@ public class PropositionalModalTableauxSearch {
                 Constructor<?> constructor =
                         clazz.getConstructor(PropositionalModalRuleUtilities.class);
                 Rule rule =
-                        (Rule) constructor.newInstance(new PropositionalModalRuleUtilities());
+                        (Rule) constructor.newInstance(ruleUtilities, modalUtilities);
                 if (rule.applicable(proposition))
                     rules.add(rule);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

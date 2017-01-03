@@ -11,16 +11,19 @@ import java.util.List;
  * Created by Hayo on 25/08/2016.
  */
 public class DisjunctionRule extends AbstractDisjunctionRule {
+    
+    private ModalUtilities modalUtilities;
 
-    public DisjunctionRule(PropositionalModalRuleUtilities ruleUtilities) {
+    public DisjunctionRule(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         super(ruleUtilities);
+        this.modalUtilities = modalUtilities;
     }
 
     @Override
     public boolean applicable(Node proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION || ModalUtilities.isModal(node))
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION || modalUtilities.isModal(node))
             return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.DISJUNCTION);
@@ -30,10 +33,10 @@ public class DisjunctionRule extends AbstractDisjunctionRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
+        String nonmodalProposition = modalUtilities.getNonModalProposition(node);
 
-        String antecedent = nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String consequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String antecedent = nonmodalProposition.substring(1, splitPosition).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String consequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
 
         return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
     }

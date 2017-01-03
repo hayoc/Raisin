@@ -22,9 +22,11 @@ import static org.junit.Assert.assertTrue;
 @GuiceJUnitRunner.GuiceModules({TestModule.class})
 public class NegatedNecessityRuleTest {
 
+    private ModalUtilities modalUtilities = new ModalUtilities();
+
     @Test
     public void testNegatedNecessityRule() {
-        Rule rule = new NegatedNeccesityRule(new PropositionalModalRuleUtilities());
+        Rule rule = new NegatedNeccesityRule(new PropositionalModalRuleUtilities(modalUtilities), modalUtilities);
         assertTrue(rule.applicable(new PropositionalModalNode("~□(A = B), 1")));
 
         List<Node> resultNodes = rule.apply();
@@ -33,6 +35,6 @@ public class NegatedNecessityRuleTest {
         assertFalse(rule.applicable(new PropositionalModalNode("□(A = B), 1")));
         assertFalse(rule.applicable(new PropositionalModalNode("~◊(A > B), 1")));
 
-        ModalUtilities.clearRelativeWorlds();
+        modalUtilities.clearRelativeWorlds();
     }
 }

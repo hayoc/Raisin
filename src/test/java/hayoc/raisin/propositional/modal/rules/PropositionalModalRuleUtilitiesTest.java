@@ -1,5 +1,6 @@
 package hayoc.raisin.propositional.modal.rules;
 
+import hayoc.raisin.propositional.modal.ModalUtilities;
 import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 @GuiceJUnitRunner.GuiceModules({TestModule.class})
 public class PropositionalModalRuleUtilitiesTest {
 
-    private PropositionalModalRuleUtilities ruleUtilities = new PropositionalModalRuleUtilities();
+    private PropositionalModalRuleUtilities ruleUtilities = new PropositionalModalRuleUtilities(new ModalUtilities());
 
     @Test
     public void testIsNegation() {

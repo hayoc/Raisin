@@ -22,9 +22,11 @@ import static org.junit.Assert.assertTrue;
 @GuiceJUnitRunner.GuiceModules({TestModule.class})
 public class NegatedPossibilityRuleTest {
 
+    private ModalUtilities modalUtilities = new ModalUtilities();
+
     @Test
     public void testNegatedPossibiliyRule() {
-        Rule rule = new NegatedPossibilityRule(new PropositionalModalRuleUtilities());
+        Rule rule = new NegatedPossibilityRule(new PropositionalModalRuleUtilities(modalUtilities), modalUtilities);
         assertTrue(rule.applicable(new PropositionalModalNode("~◊(A = B), 1")));
 
         List<Node> resultNodes = rule.apply();
@@ -33,6 +35,6 @@ public class NegatedPossibilityRuleTest {
         assertFalse(rule.applicable(new PropositionalModalNode("◊(A = B), 1")));
         assertFalse(rule.applicable(new PropositionalModalNode("~□(A > B), 1")));
 
-        ModalUtilities.clearRelativeWorlds();
+        modalUtilities.clearRelativeWorlds();
     }
 }

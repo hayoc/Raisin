@@ -12,15 +12,18 @@ import java.util.List;
  */
 public class ImplicationRule extends AbstractImplicationRule {
 
-    public ImplicationRule(PropositionalModalRuleUtilities ruleUtilities) {
+    private ModalUtilities modalUtilities;
+
+    public ImplicationRule(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         super(ruleUtilities);
+        this.modalUtilities = modalUtilities;
     }
 
     @Override
     public boolean applicable(Node proposition) {
         this.node = proposition;
 
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION || ModalUtilities.isModal(node))
+        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION || modalUtilities.isModal(node))
             return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONDITIONAL);
@@ -30,10 +33,10 @@ public class ImplicationRule extends AbstractImplicationRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
+        String nonmodalProposition = modalUtilities.getNonModalProposition(node);
 
-        String antecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String consequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String antecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(1, splitPosition).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String consequent = nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
 
         return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
     }

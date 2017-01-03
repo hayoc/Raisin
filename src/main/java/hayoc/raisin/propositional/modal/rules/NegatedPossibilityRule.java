@@ -3,6 +3,7 @@ package hayoc.raisin.propositional.modal.rules;
 import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.propositional.common.rules.Rule;
+import hayoc.raisin.propositional.modal.ModalUtilities;
 import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 
 import java.util.Collections;
@@ -17,7 +18,7 @@ public class NegatedPossibilityRule implements Rule {
 
     private PropositionalModalNode node;
 
-    public NegatedPossibilityRule(PropositionalModalRuleUtilities ruleUtilities) {
+    public NegatedPossibilityRule(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         this.ruleUtilities = ruleUtilities;
     }
 

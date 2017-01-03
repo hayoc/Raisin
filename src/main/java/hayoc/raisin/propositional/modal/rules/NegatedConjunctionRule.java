@@ -11,9 +11,12 @@ import java.util.List;
  * Created by Hayo on 25/08/2016.
  */
 public class NegatedConjunctionRule extends AbstractNegatedConjunctionRule {
+    
+    private ModalUtilities modalUtilities;
 
-    public NegatedConjunctionRule(PropositionalModalRuleUtilities ruleUtilities) {
+    public NegatedConjunctionRule(PropositionalModalRuleUtilities ruleUtilities, ModalUtilities modalUtilities) {
         super(ruleUtilities);
+        this.modalUtilities = modalUtilities;
     }
 
     @Override
@@ -21,7 +24,7 @@ public class NegatedConjunctionRule extends AbstractNegatedConjunctionRule {
         this.node = proposition;
 
         if (proposition.getProposition().charAt(0) != AbstractRuleUtilities.NEGATION || proposition.getProposition().charAt(1) == AbstractRuleUtilities.NEGATION &&
-                ModalUtilities.isModal(node))
+                modalUtilities.isModal(node))
             return false;
 
         splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.CONJUNCTION);
@@ -31,10 +34,10 @@ public class NegatedConjunctionRule extends AbstractNegatedConjunctionRule {
 
     @Override
     public List<Node> apply() {
-        String nonmodalProposition = ModalUtilities.getNonModalProposition(node);
+        String nonmodalProposition = modalUtilities.getNonModalProposition(node);
 
-        String antecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(2, splitPosition).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
-        String consequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + ModalUtilities.writeWorld(ModalUtilities.getWorld(node));
+        String antecedent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(2, splitPosition).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
+        String consequent = AbstractRuleUtilities.NEGATION + nonmodalProposition.substring(splitPosition + 1, nonmodalProposition.length() - 1).trim() + modalUtilities.writeWorld(modalUtilities.getWorld(node));
 
         return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
     }
