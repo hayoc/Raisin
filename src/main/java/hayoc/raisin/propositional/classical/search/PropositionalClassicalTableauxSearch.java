@@ -3,6 +3,7 @@ package hayoc.raisin.propositional.classical.search;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
 import hayoc.raisin.propositional.common.Node;
 import hayoc.raisin.propositional.common.rules.Rule;
+import hayoc.raisin.propositional.common.search.TableauxSearchImpl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
@@ -14,7 +15,7 @@ import java.util.*;
 /**
  * Created by Hayo on 19/08/2016.
  */
-public class PropositionalClassicalTableauxSearch {
+public class PropositionalClassicalTableauxSearch extends TableauxSearchImpl {
 
     private static final Logger LOG = Logger.getLogger(PropositionalClassicalTableauxSearch.class);
 
@@ -45,7 +46,7 @@ public class PropositionalClassicalTableauxSearch {
         return allBranchesClosed(goalNode);
     }
 
-    protected List<Rule> getApplicableRules(Node proposition) {
+    public List<Rule> getApplicableRules(Node proposition) {
         List<Rule> rules = new ArrayList<>();
 
         for (Class<?> clazz : PropositionalClassicalRuleUtilities.PROPOSITIONAL_CLASSICAL_RULES) {
@@ -62,39 +63,5 @@ public class PropositionalClassicalTableauxSearch {
         }
 
         return rules;
-    }
-
-    protected Collection<Node> applyRules(List<Rule> rules) {
-        Collection<Node> results = new ArrayList<>();
-        for (Rule rule : rules)
-            results.addAll(rule.apply());
-
-        Collection<Node> propositions = new ArrayList<>();
-        for (Node result : results) {
-            propositions.add(result);
-            if (CollectionUtils.isNotEmpty(result.getChildren()))
-                propositions.addAll(result.getChildren());
-        }
-        return propositions;
-    }
-
-    protected boolean allBranchesClosed(Node node) {
-        List<Node> leafNodes = new ArrayList<>();
-        getLeafNodes(node, leafNodes);
-        for (Node leaf : leafNodes) {
-            if (!leaf.isClosed())
-                return false;
-        }
-        return true;
-    }
-
-    private void getLeafNodes(Node node, List<Node> leafNodes) {
-        if (CollectionUtils.isEmpty(node.getChildren())) {
-            leafNodes.add(node);
-        } else {
-            for (Node child : node.getChildren()) {
-                getLeafNodes(child, leafNodes);
-            }
-        }
     }
 }
