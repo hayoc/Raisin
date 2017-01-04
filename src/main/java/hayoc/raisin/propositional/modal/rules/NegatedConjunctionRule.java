@@ -1,8 +1,8 @@
 package hayoc.raisin.propositional.modal.rules;
 
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.AbstractNegatedConjunctionRule;
-import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
+import hayoc.raisin.common.Node;
+import hayoc.raisin.common.rules.AbstractNegatedConjunctionRule;
+import hayoc.raisin.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.propositional.modal.ModalUtilities;
 
 import java.util.List;

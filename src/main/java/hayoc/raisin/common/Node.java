@@ -1,4 +1,4 @@
-package hayoc.raisin.propositional.common;
+package hayoc.raisin.common;
 
 import java.util.List;
 
@@ -8,14 +8,23 @@ import java.util.List;
 public interface Node {
 
     String getProposition();
+
     void setProposition(String proposition);
+
     Node getParent();
+
     void setParent(Node node);
+
     List<Node> getChildren();
+
     void setChildren(List<Node> children);
+
     boolean isClosed();
+
     void setClosed(boolean closed);
+
     boolean isBranchChecked();
+
     void setBranchChecked(boolean closed);
 
 }

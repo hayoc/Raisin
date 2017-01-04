@@ -1,12 +1,10 @@
 package hayoc.raisin.propositional.modal.rules;
 
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
-import hayoc.raisin.propositional.common.rules.Rule;
+import hayoc.raisin.common.Node;
+import hayoc.raisin.common.rules.AbstractRuleUtilities;
+import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.propositional.modal.ModalUtilities;
-import hayoc.raisin.propositional.modal.search.PropositionalModalNode;
 
-import java.util.Collections;
 import java.util.List;
 
 /**

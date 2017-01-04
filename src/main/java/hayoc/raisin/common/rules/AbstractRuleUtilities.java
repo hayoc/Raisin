@@ -1,6 +1,6 @@
-package hayoc.raisin.propositional.common.rules;
+package hayoc.raisin.common.rules;
 
-import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.common.Node;
 import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;

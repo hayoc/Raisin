@@ -1,7 +1,7 @@
-package hayoc.raisin.propositional.common;
+package hayoc.raisin.common;
 
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
+import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;

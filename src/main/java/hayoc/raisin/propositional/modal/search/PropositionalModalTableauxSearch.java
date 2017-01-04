@@ -1,14 +1,10 @@
 package hayoc.raisin.propositional.modal.search;
 
-import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
-import hayoc.raisin.propositional.classical.search.PropositionalClassicalTableauxSearch;
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.Rule;
-import hayoc.raisin.propositional.common.search.TableauxSearchImpl;
+import hayoc.raisin.common.Node;
+import hayoc.raisin.common.rules.Rule;
+import hayoc.raisin.common.search.TableauxSearchImpl;
 import hayoc.raisin.propositional.modal.ModalUtilities;
 import hayoc.raisin.propositional.modal.rules.PropositionalModalRuleUtilities;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;

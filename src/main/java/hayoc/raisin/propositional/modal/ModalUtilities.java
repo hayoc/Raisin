@@ -1,11 +1,8 @@
 package hayoc.raisin.propositional.modal;
 
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.AbstractRuleUtilities;
-import hayoc.raisin.propositional.modal.rules.PropositionalModalRuleUtilities;
-import hayoc.raisin.propositional.modal.search.WorldNode;
+import hayoc.raisin.common.Node;
+import hayoc.raisin.common.rules.AbstractRuleUtilities;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;

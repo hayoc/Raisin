@@ -1,10 +1,9 @@
 package hayoc.raisin.propositional.classical.search;
 
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.Rule;
-import hayoc.raisin.propositional.common.search.TableauxSearchImpl;
-import org.apache.commons.collections4.CollectionUtils;
+import hayoc.raisin.common.Node;
+import hayoc.raisin.common.rules.Rule;
+import hayoc.raisin.common.search.TableauxSearchImpl;
 import org.apache.log4j.Logger;
 
 import javax.inject.Inject;

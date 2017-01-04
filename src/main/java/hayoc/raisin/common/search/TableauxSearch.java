@@ -1,10 +1,8 @@
-package hayoc.raisin.propositional.common.search;
+package hayoc.raisin.common.search;
 
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.Rule;
-import org.apache.commons.collections4.CollectionUtils;
+import hayoc.raisin.common.Node;
+import hayoc.raisin.common.rules.Rule;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

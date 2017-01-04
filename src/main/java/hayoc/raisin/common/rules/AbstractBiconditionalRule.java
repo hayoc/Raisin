@@ -1,8 +1,6 @@
-package hayoc.raisin.propositional.common.rules;
+package hayoc.raisin.common.rules;
 
-import hayoc.raisin.propositional.common.Node;
-import hayoc.raisin.propositional.common.rules.Rule;
-import hayoc.raisin.propositional.modal.rules.PropositionalModalRuleUtilities;
+import hayoc.raisin.common.Node;
 import org.apache.commons.collections4.ListUtils;
 
 import java.util.List;

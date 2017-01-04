@@ -1,6 +1,6 @@
 package hayoc.raisin.propositional.modal.search;
 
-import hayoc.raisin.propositional.common.Node;
+import hayoc.raisin.common.Node;
 
 import java.util.List;
 
