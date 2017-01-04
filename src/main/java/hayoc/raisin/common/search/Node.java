@@ -1,4 +1,4 @@
-package hayoc.raisin.common;
+package hayoc.raisin.common.search;
 
 import java.util.List;
 

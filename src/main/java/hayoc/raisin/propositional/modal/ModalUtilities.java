@@ -1,6 +1,6 @@
 package hayoc.raisin.propositional.modal;
 
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.common.rules.AbstractRuleUtilities;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

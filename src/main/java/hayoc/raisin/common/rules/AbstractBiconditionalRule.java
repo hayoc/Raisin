@@ -1,6 +1,6 @@
 package hayoc.raisin.common.rules;
 
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import org.apache.commons.collections4.ListUtils;
 
 import java.util.List;

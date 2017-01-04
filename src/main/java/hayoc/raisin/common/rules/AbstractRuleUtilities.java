@@ -1,6 +1,6 @@
 package hayoc.raisin.common.rules;
 
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -25,6 +25,8 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
     public static final char NECESSITY = '□';
     public static final char POSSIBILITY = '◊';
     public static final char WORLD_SEPARATOR = ',';
+    public static final char UNIVERSAL_QUANTIFIER = '∀';
+    public static final char EXISTENTIAL_QUANTIFIER = '∃';
     public static final char[] BINARY_CONNECTIVES = {CONJUNCTION, DISJUNCTION, CONDITIONAL, BICONDITIONAL};
 
     public int getConnectivePosition(Node proposition, char connective) {

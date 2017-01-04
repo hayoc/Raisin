@@ -1,7 +1,7 @@
 package hayoc.raisin.propositional.classical.rules;
 
 import hayoc.raisin.common.rules.AbstractRuleUtilities;
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.common.rules.Rule;
 
 import java.util.List;

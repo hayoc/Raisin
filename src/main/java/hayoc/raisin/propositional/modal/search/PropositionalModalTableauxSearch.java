@@ -1,6 +1,6 @@
 package hayoc.raisin.propositional.modal.search;
 
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.common.search.TableauxSearchImpl;
 import hayoc.raisin.propositional.modal.ModalUtilities;

@@ -1,6 +1,6 @@
 package hayoc.raisin.propositional.modal.rules;
 
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.common.rules.AbstractBiconditionalRule;
 import hayoc.raisin.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.propositional.modal.ModalUtilities;

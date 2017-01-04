@@ -1,7 +1,7 @@
 package hayoc.raisin.propositional.classical.search;
 
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.common.search.TableauxSearchImpl;
 import org.apache.log4j.Logger;
@@ -53,7 +53,7 @@ public class PropositionalClassicalTableauxSearch extends TableauxSearchImpl {
                 Constructor<?> constructor =
                         clazz.getConstructor(PropositionalClassicalRuleUtilities.class);
                 Rule rule =
-                         (Rule) constructor.newInstance(new PropositionalClassicalRuleUtilities());
+                         (Rule) constructor.newInstance(ruleUtilities);
                 if (rule.applicable(proposition))
                     rules.add(rule);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {

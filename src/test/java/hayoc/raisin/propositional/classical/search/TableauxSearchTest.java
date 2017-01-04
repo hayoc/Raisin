@@ -1,6 +1,6 @@
 package hayoc.raisin.propositional.classical.search;
 
-import hayoc.raisin.common.Node;
+import hayoc.raisin.common.search.Node;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
