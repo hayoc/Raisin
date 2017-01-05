@@ -2,9 +2,9 @@ package hayoc.raisin.predicate.classical;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import hayoc.raisin.common.SyntaxException;
 import hayoc.raisin.predicate.classical.rules.PredicateClassicalRuleUtilities;
 import hayoc.raisin.predicate.classical.search.PredicateClassicalTableauxSearch;
-import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import hayoc.raisin.setup.RaisinModule;
 import org.apache.log4j.Logger;
 
@@ -29,7 +29,7 @@ public class PredicateClassicalLogic {
     public boolean prove(String goal) {
         try {
             goal = predicateUtilities.negate(goal);
-        } catch (PropositionalSyntaxException e) {
+        } catch (SyntaxException e) {
             return false;
         }
 

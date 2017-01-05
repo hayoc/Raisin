@@ -1,7 +1,6 @@
 package hayoc.raisin.common;
 
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import hayoc.raisin.setup.GuiceJUnitRunner;
 import hayoc.raisin.setup.TestModule;
 import org.junit.Test;
@@ -29,7 +28,7 @@ public class PropositionalUtilitiesTest {
     public void testSimpleNegation() {
         try {
             assertEquals(propositionalUtilities.negate("(((A > B) & (A > C)) > (A > (B & C)))"), TARGET);
-        } catch (PropositionalSyntaxException e) {
+        } catch (SyntaxException e) {
             fail();
         }
     }
@@ -38,13 +37,13 @@ public class PropositionalUtilitiesTest {
     public void testNegationWithMissingParentheses() {
         try {
             assertEquals(propositionalUtilities.negate("((A > B) & (A > C)) > (A > (B & C))"), TARGET);
-        } catch (PropositionalSyntaxException e) {
+        } catch (SyntaxException e) {
             fail();
         }
     }
 
-    @Test(expected=PropositionalSyntaxException.class)
-    public void testSyntaxError() throws PropositionalSyntaxException {
+    @Test(expected=SyntaxException.class)
+    public void testSyntaxError() throws SyntaxException {
         propositionalUtilities.negate("((A > B & (A > C)) > (A > (B & C))");
     }
 }

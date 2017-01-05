@@ -1,7 +1,7 @@
 package hayoc.raisin.common.rules;
 
+import hayoc.raisin.common.SyntaxException;
 import hayoc.raisin.common.search.Node;
-import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
@@ -70,7 +70,7 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
         }
     }
 
-    public String negate(String goal) throws PropositionalSyntaxException {
+    public String negate(String goal) throws SyntaxException {
         goal = NEGATION + validateParentheses(goal);
         LOG.info("Goal: " + goal);
         return goal;
@@ -86,7 +86,7 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
         }
     }
 
-    public String validateParentheses(String goal) throws PropositionalSyntaxException {
+    public String validateParentheses(String goal) throws SyntaxException {
         int inBrackets = 0;
         int parentheses = 0;
         boolean modify = false;
@@ -107,7 +107,7 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
         }
         if (parentheses%2 != 0) {
             LOG.error("Goal Syntax: Invalid amount of parentheses");
-            throw new PropositionalSyntaxException();
+            throw new SyntaxException();
         }
         return modify ? OPEN_PARENTHESIS + goal + CLOSE_PARENTHESIS : goal;
     }

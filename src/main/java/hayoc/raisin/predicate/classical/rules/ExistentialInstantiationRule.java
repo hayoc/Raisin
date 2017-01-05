@@ -3,9 +3,8 @@ package hayoc.raisin.predicate.classical.rules;
 import hayoc.raisin.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.common.search.Node;
-import hayoc.raisin.predicate.classical.common.VariableConstantMap;
+import hayoc.raisin.predicate.classical.common.ConstantList;
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,13 +15,13 @@ import java.util.List;
 public class ExistentialInstantiationRule implements Rule {
 
     private PredicateClassicalRuleUtilities ruleUtilities;
-    private VariableConstantMap variableConstantMap;
+    private ConstantList constantList;
 
     private Node node;
 
-    public ExistentialInstantiationRule(PredicateClassicalRuleUtilities ruleUtilities, VariableConstantMap variableConstantMap) {
+    public ExistentialInstantiationRule(PredicateClassicalRuleUtilities ruleUtilities, ConstantList constantList) {
         this.ruleUtilities = ruleUtilities;
-        this.variableConstantMap = variableConstantMap;
+        this.constantList = constantList;
     }
 
     @Override
@@ -35,10 +34,7 @@ public class ExistentialInstantiationRule implements Rule {
     public List<Node> apply() {
         String proposition = node.getProposition();
         String variable = String.valueOf(proposition.charAt(1));
-        String constant = variableConstantMap.get(variable);
-        if (StringUtils.isBlank(constant)) {
-            constant = variableConstantMap.getUniqueConstant(variable);
-        }
+        String constant = constantList.getUniqueConstant();
 
         proposition = proposition.substring(2).replace(variable, constant);
         return Collections.singletonList(new PropositionalClassicalNode(proposition, node, null));

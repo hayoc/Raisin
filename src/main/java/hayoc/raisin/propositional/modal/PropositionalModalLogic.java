@@ -2,7 +2,7 @@ package hayoc.raisin.propositional.modal;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import hayoc.raisin.propositional.common.PropositionalSyntaxException;
+import hayoc.raisin.common.SyntaxException;
 import hayoc.raisin.propositional.modal.rules.PropositionalModalRuleUtilities;
 import hayoc.raisin.propositional.modal.search.PropositionalModalTableauxSearch;
 import hayoc.raisin.setup.RaisinModule;
@@ -29,7 +29,7 @@ public class PropositionalModalLogic {
     public boolean prove(String goal) {
         try {
             goal = propositionalUtilities.negate(goal);
-        } catch (PropositionalSyntaxException e) {
+        } catch (SyntaxException e) {
             return false;
         }
 

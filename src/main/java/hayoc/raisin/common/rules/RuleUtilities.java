@@ -1,7 +1,7 @@
 package hayoc.raisin.common.rules;
 
+import hayoc.raisin.common.SyntaxException;
 import hayoc.raisin.common.search.Node;
-import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ public interface RuleUtilities {
 
     void getLowestChildNodes(Node node, List<Node> childNodes);
 
-    String negate(String goal) throws PropositionalSyntaxException;
+    String negate(String goal) throws SyntaxException;
 
-    String validateParentheses(String goal) throws PropositionalSyntaxException;
+    String validateParentheses(String goal) throws SyntaxException;
 
     int getConnectivePosition(Node proposition, char connective);
 

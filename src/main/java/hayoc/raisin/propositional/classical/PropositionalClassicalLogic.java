@@ -2,8 +2,8 @@ package hayoc.raisin.propositional.classical;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import hayoc.raisin.common.SyntaxException;
 import hayoc.raisin.propositional.classical.rules.PropositionalClassicalRuleUtilities;
-import hayoc.raisin.propositional.common.PropositionalSyntaxException;
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalTableauxSearch;
 import hayoc.raisin.setup.RaisinModule;
 import org.apache.log4j.Logger;
@@ -29,7 +29,7 @@ public class PropositionalClassicalLogic {
     public boolean prove(String goal) {
         try {
             goal = propositionalUtilities.negate(goal);
-        } catch (PropositionalSyntaxException e) {
+        } catch (SyntaxException e) {
             return false;
         }
 
