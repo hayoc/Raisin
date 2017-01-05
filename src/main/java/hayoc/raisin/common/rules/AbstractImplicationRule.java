@@ -1,6 +1,7 @@
 package hayoc.raisin.common.rules;
 
 import hayoc.raisin.common.search.Node;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -8,6 +9,8 @@ import java.util.List;
  * Created by Hayo on 25/08/2016.
  */
 public class AbstractImplicationRule implements Rule {
+
+    private static final Logger LOG = Logger.getLogger(AbstractImplicationRule.class);
 
     protected RuleUtilities ruleUtilities;
 
@@ -34,7 +37,9 @@ public class AbstractImplicationRule implements Rule {
     public List<Node> apply() {
         String antecedent = AbstractRuleUtilities.NEGATION + node.getProposition().substring(1, splitPosition).trim();
         String consequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
+        List<Node> result = ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
 
-        return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
+        LOG.debug(node.toString() + " ==> " + result.toString());
+        return result;
     }
 }

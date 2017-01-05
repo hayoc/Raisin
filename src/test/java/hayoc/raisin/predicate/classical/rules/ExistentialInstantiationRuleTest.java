@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -20,11 +21,17 @@ public class ExistentialInstantiationRuleTest {
     private ConstantList constantList = new ConstantList();
 
     @Test
-    public void testExistentialInstantiationRuleTest() {
+    public void testExistentialInstantiationRule() {
         testApplicableRule("∃x((Ax & Bx) = (Bx & Ax))", "0");
         testApplicableRule("∃x(Ax ^ (Bx & Ax))", "1");
         testApplicableRule("∃x(Ax ^ (By & Ax))", "2");
-        //testRule("∀x(Ax ^ (Bx & Ax))", "1");
+        testNotApplicable("∀x(Ax ^ (Bx & Ax))");
+        testNotApplicable("∃((Ax & Bx = (Bx & Ax))");
+    }
+
+    private void testNotApplicable(String proposition) {
+        Rule rule = new ExistentialInstantiationRule(ruleUtilities, constantList);
+        assertFalse(rule.applicable(new PropositionalClassicalNode(proposition)));
     }
 
     private void testApplicableRule(String proposition, String expectedConstant) {

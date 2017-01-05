@@ -81,4 +81,19 @@ public abstract class NodeImpl implements Node {
     public void setBranchChecked(boolean branchChecked) {
         this.branchChecked = branchChecked;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{ ");
+        sb.append(proposition);
+        if (children != null && !children.isEmpty()) {
+            sb.append(" ");
+            for (Node child : children) {
+                sb.append(child.toString());
+            }
+        }
+        sb.append(" }");
+        return sb.toString();
+    }
 }

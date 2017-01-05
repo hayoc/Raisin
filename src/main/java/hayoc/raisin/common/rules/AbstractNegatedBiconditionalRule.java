@@ -2,6 +2,7 @@ package hayoc.raisin.common.rules;
 
 import hayoc.raisin.common.search.Node;
 import org.apache.commons.collections4.ListUtils;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
  * Created by Hayo on 25/08/2016.
  */
 public class AbstractNegatedBiconditionalRule implements Rule {
+
+    private static final Logger LOG = Logger.getLogger(AbstractNegatedBiconditionalRule.class);
 
     protected RuleUtilities ruleUtilities;
 
@@ -40,7 +43,9 @@ public class AbstractNegatedBiconditionalRule implements Rule {
 
         List<Node> firstSet = ruleUtilities.createSameBranchChildren(node, firstAntecedent, firstConsequent);
         List<Node> secondSet = ruleUtilities.createSameBranchChildren(node, secondAntecedent, secondConsequent);
+        List<Node> result = ListUtils.union(firstSet, secondSet);
 
-        return ListUtils.union(firstSet, secondSet);
+        LOG.debug(node.toString() + " ==> " + result.toString());
+        return result;
     }
 }
