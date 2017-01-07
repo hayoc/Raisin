@@ -2,7 +2,7 @@ package hayoc.raisin.predicate.classical.rules;
 
 import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.common.search.Node;
-import hayoc.raisin.predicate.classical.common.ConstantList;
+import hayoc.raisin.predicate.classical.common.VariableConstantMap;
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import org.junit.Test;
 
@@ -18,11 +18,11 @@ import static org.junit.Assert.assertTrue;
 public class NegatedExistentialInstantiationRuleTest {
 
     private PredicateClassicalRuleUtilities ruleUtilities = new PredicateClassicalRuleUtilities();
-    private ConstantList constantList = new ConstantList();
+    private VariableConstantMap variableConstantMap = new VariableConstantMap();
 
     @Test
     public void testNegatedExistentialInstantiationRule() {
-        Rule rule = new NegatedExistentialInstantiationRule(ruleUtilities, constantList);
+        Rule rule = new NegatedExistentialInstantiationRule(ruleUtilities, variableConstantMap);
         assertTrue(rule.applicable(new PropositionalClassicalNode("~∃x((Ax & Bx) = (Bx & Ax))")));
 
         List<Node> results = rule.apply();
@@ -33,7 +33,7 @@ public class NegatedExistentialInstantiationRuleTest {
     }
 
     private void testNotApplicable(String proposition) {
-        Rule rule = new NegatedExistentialInstantiationRule(ruleUtilities, constantList);
+        Rule rule = new NegatedExistentialInstantiationRule(ruleUtilities, variableConstantMap);
         assertFalse(rule.applicable(new PropositionalClassicalNode(proposition)));
     }
 }

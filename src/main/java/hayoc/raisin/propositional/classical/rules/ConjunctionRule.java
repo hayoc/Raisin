@@ -7,7 +7,6 @@ import hayoc.raisin.common.rules.AbstractConjunctionRule;
  */
 public class ConjunctionRule extends AbstractConjunctionRule {
 
-
     public ConjunctionRule(PropositionalClassicalRuleUtilities ruleUtilities) {
         super(ruleUtilities);
     }

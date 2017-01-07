@@ -80,6 +80,24 @@ public class PropositionalModalRuleUtilities extends AbstractRuleUtilities {
     }
 
     @Override
+    public List<Node> createSingleChild(String proposition, Node parent) {
+        List<Node> nodes = new ArrayList<>();
+
+        List<Node> childNodes = new ArrayList<>();
+        getLowestChildNodes(parent, childNodes);
+
+        for (Node node : childNodes) {
+            if (branchClosed(node))
+                continue;
+            nodes.clear();
+            nodes.add(new PropositionalModalNode(proposition, node, null));
+            node.setChildren(nodes);
+        }
+
+        return nodes;
+    }
+
+    @Override
     public boolean isNegation(Node propositionNode, Node parentNode) {
         String proposition = propositionNode.getProposition();
         String parent = parentNode.getProposition();

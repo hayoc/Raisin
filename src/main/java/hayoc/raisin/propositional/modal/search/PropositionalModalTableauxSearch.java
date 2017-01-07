@@ -54,7 +54,7 @@ public class PropositionalModalTableauxSearch extends TableauxSearchImpl {
         for (Class<?> clazz : PropositionalModalRuleUtilities.PROPOSITIONAL_MODAL_RULES) {
             try {
                 Constructor<?> constructor =
-                        clazz.getConstructor(PropositionalModalRuleUtilities.class);
+                        clazz.getConstructor(PropositionalModalRuleUtilities.class, ModalUtilities.class);
                 Rule rule =
                         (Rule) constructor.newInstance(ruleUtilities, modalUtilities);
                 if (rule.applicable(proposition))

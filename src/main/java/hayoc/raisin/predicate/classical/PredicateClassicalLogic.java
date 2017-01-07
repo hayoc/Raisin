@@ -40,7 +40,8 @@ public class PredicateClassicalLogic {
         RaisinModule module = new RaisinModule();
         Injector injector = Guice.createInjector(module);
 
-        if (injector.getInstance(PredicateClassicalLogic.class).prove("")) {
+        //if (injector.getInstance(PredicateClassicalLogic.class).prove("(∀xAx > ∃xAx)")) {
+        if (injector.getInstance(PredicateClassicalLogic.class).prove("((∀x(Px > Qx) & ∀x(Qx > Sx)) > ∀x(Px > Sx))")) {
             System.out.println("Valid");
         } else {
             System.out.println("Invalid");

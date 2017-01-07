@@ -3,11 +3,9 @@ package hayoc.raisin.predicate.classical.rules;
 import hayoc.raisin.common.rules.AbstractRuleUtilities;
 import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.common.search.Node;
-import hayoc.raisin.predicate.classical.common.ConstantList;
-import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
+import hayoc.raisin.predicate.classical.common.VariableConstantMap;
 import org.apache.log4j.Logger;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,13 +16,13 @@ public class ExistentialInstantiationRule implements Rule {
     private static final Logger LOG = Logger.getLogger(ExistentialInstantiationRule.class);
 
     private PredicateClassicalRuleUtilities ruleUtilities;
-    private ConstantList constantList;
+    private VariableConstantMap variableConstantMap;
 
     private Node node;
 
-    public ExistentialInstantiationRule(PredicateClassicalRuleUtilities ruleUtilities, ConstantList constantList) {
+    public ExistentialInstantiationRule(PredicateClassicalRuleUtilities ruleUtilities, VariableConstantMap variableConstantMap) {
         this.ruleUtilities = ruleUtilities;
-        this.constantList = constantList;
+        this.variableConstantMap = variableConstantMap;
     }
 
     @Override
@@ -37,10 +35,10 @@ public class ExistentialInstantiationRule implements Rule {
     public List<Node> apply() {
         String proposition = node.getProposition();
         String variable = String.valueOf(proposition.charAt(1));
-        String constant = constantList.getUniqueConstant();
-        Node result = new PropositionalClassicalNode(proposition.substring(2).replace(variable, constant), node, null);
+        String constant = variableConstantMap.getUniqueConstant(variable);
+        List<Node> result = ruleUtilities.createSingleChild(proposition.substring(2).replace(variable, constant), node);
 
         LOG.debug(node.toString() + " ==> " + result.toString());
-        return Collections.singletonList(result);
+        return result;
     }
 }

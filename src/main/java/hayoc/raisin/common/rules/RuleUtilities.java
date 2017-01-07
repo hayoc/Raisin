@@ -23,4 +23,6 @@ public interface RuleUtilities {
     List<Node> createSameBranchChildren(Node parent, String antecedent, String consequent);
 
     List<Node> createSeparateBranchChildren(Node parent, String antecedent, String consequent);
+
+    List<Node> createSingleChild(String proposition, Node parent);
 }

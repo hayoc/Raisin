@@ -2,7 +2,7 @@ package hayoc.raisin.predicate.classical.rules;
 
 import hayoc.raisin.common.rules.Rule;
 import hayoc.raisin.common.search.Node;
-import hayoc.raisin.predicate.classical.common.ConstantList;
+import hayoc.raisin.predicate.classical.common.VariableConstantMap;
 import hayoc.raisin.propositional.classical.search.PropositionalClassicalNode;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class UniversalInstantiationRuleTest {
 
     private PredicateClassicalRuleUtilities ruleUtilities = new PredicateClassicalRuleUtilities();
-    private ConstantList constantList = new ConstantList();
+    private VariableConstantMap variableConstantMap = new VariableConstantMap();
 
     @Test
     public void testUniversalInstantiationRule() {
@@ -30,12 +30,12 @@ public class UniversalInstantiationRuleTest {
     }
 
     private void testNotApplicable(String proposition) {
-        Rule rule = new UniversalInstantiationRule(ruleUtilities, constantList);
+        Rule rule = new UniversalInstantiationRule(ruleUtilities, variableConstantMap);
         assertFalse(rule.applicable(new PropositionalClassicalNode(proposition)));
     }
 
     private void testApplicableRule(String proposition, String expectedConstant) {
-        Rule rule = new UniversalInstantiationRule(ruleUtilities, constantList);
+        Rule rule = new UniversalInstantiationRule(ruleUtilities, variableConstantMap);
         assertTrue(rule.applicable(new PropositionalClassicalNode(proposition)));
 
         List<Node> results = rule.apply();

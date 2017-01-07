@@ -1,42 +1,13 @@
 package hayoc.raisin.propositional.classical.rules;
 
-import hayoc.raisin.common.rules.AbstractRuleUtilities;
-import hayoc.raisin.common.search.Node;
-import hayoc.raisin.common.rules.Rule;
-
-import java.util.List;
+import hayoc.raisin.common.rules.AbstractDisjunctionRule;
 
 /**
  * Created by Hayo on 17/08/2016.
  */
-public class DisjunctionRule implements Rule {
-
-    private PropositionalClassicalRuleUtilities ruleUtilities;
-
-    private Node node;
-    private int splitPosition;
+public class DisjunctionRule extends AbstractDisjunctionRule {
 
     public DisjunctionRule(PropositionalClassicalRuleUtilities ruleUtilities) {
-        this.ruleUtilities = ruleUtilities;
-    }
-
-    @Override
-    public boolean applicable(Node proposition) {
-        this.node = proposition;
-
-        if (proposition.getProposition().charAt(0) == AbstractRuleUtilities.NEGATION)
-            return false;
-
-        splitPosition = ruleUtilities.getConnectivePosition(proposition, AbstractRuleUtilities.DISJUNCTION);
-
-        return splitPosition != 0;
-    }
-
-    @Override
-    public List<Node> apply() {
-        String antecedent = node.getProposition().substring(1, splitPosition).trim();
-        String consequent = node.getProposition().substring(splitPosition + 1, node.getProposition().length() - 1).trim();
-
-        return ruleUtilities.createSeparateBranchChildren(node, antecedent, consequent);
+        super(ruleUtilities);
     }
 }
