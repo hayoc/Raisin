@@ -3,8 +3,9 @@ Automated Theorem Prover for Classical and Non-Classical Logics
 
 Automated Theorem Prover based on Analytic Tableaux for:
 - classical propositonal logic, :white_check_mark:
-- classical logic with quantification, :white_large_square:
+- classical logic with quantification, :white_check_mark:
 - normal modal logic, :white_check_mark:
+- normal modal logic with quantification, :white_large_square:
 - conditional logic, :white_large_square:
 - intuitionistic logic,  :white_large_square:
 - many-valued logic, :white_large_square:
