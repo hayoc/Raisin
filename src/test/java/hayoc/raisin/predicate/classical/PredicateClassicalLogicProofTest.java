@@ -19,14 +19,16 @@ public class PredicateClassicalLogicProofTest {
     private final static String GOAL1 = "((∀x(Px > Qx) & ∀x(Qx > Sx)) > ∀x(Px > Sx))";
     private final static String GOAL2 = "(∀x(Ax) > ∃x(Ax))";
     private final static String GOAL3 = "((H0 & ∀x(Hx > Mx)) > M0)";
+    private final static String GOAL4 = "(A0 & (B0 & (C0 & (∀a(Aa > Da) & (∀a(Aa > Ea))))) > D0)";
 
     @Inject
     private PredicateClassicalLogic predicateClassicalLogic;
 
     @Test
     public void testPropositionalClassicalLogicProof() {
-        assertTrue(predicateClassicalLogic.prove(GOAL1));
+/*        assertTrue(predicateClassicalLogic.prove(GOAL1));
         assertTrue(predicateClassicalLogic.prove(GOAL2));
-        assertTrue(predicateClassicalLogic.prove(GOAL3));
+        assertTrue(predicateClassicalLogic.prove(GOAL3));*/
+        assertTrue(predicateClassicalLogic.prove(GOAL4));
     }
 }

@@ -106,7 +106,7 @@ public abstract class AbstractRuleUtilities implements RuleUtilities {
                 modify = true;
         }
         if (parentheses%2 != 0) {
-            LOG.error("Goal Syntax: Invalid amount of parentheses");
+            LOG.error("Goal Syntax: Invalid amount of parentheses: " + goal);
             throw new SyntaxException();
         }
         return modify ? OPEN_PARENTHESIS + goal + CLOSE_PARENTHESIS : goal;
