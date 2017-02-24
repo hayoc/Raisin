@@ -1,6 +1,8 @@
 # Raisin
 Automated Theorem Prover for Classical and Non-Classical Logics
 
+Note: _This project was intended to be used in an artificial general intelligence system, but given that I've quite changed my mind on how to implement such a system, this repository is no longer being worked on and remains largely unfinished (even though the individual logics which are checked are completely functional and autonomous)._
+
 Automated Theorem Prover based on Analytic Tableaux for:
 - classical propositonal logic, :white_check_mark:
 - classical logic with quantification, :white_check_mark:
